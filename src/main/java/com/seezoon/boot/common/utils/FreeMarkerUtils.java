@@ -1,11 +1,8 @@
 package com.seezoon.boot.common.utils;
 
-import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
-
-import org.springframework.core.io.ClassPathResource;
 
 import com.seezoon.boot.context.exception.ServiceException;
 
@@ -21,13 +18,10 @@ public class FreeMarkerUtils {
 		// 1.创建配置实例Cofiguration
 		Configuration cfg = new Configuration(Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS);
 		cfg.setDefaultEncoding("utf-8");
-		ClassPathResource cps = new ClassPathResource(directory);
-		try {
-			cfg.setDirectoryForTemplateLoading(cps.getFile());
-			return cfg;
-		} catch (IOException e) {
-			throw new ServiceException(e);
-		}
+		//ClassPathResource cps = new ClassPathResource(directory);
+		//cfg.setDirectoryForTemplateLoading(cps.getFile());
+		cfg.setClassLoaderForTemplateLoading(FreeMarkerUtils.class.getClassLoader(), DEFAULT_DIRECTORY);
+		return cfg;
 	}
 
 	/**

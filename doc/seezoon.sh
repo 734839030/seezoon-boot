@@ -6,7 +6,7 @@ JAVA_OPTS="-Xmx512m -Xms128m -XX:+UseG1GC -verbose:gc -XX:+PrintGC -XX:+PrintGCD
 APP_NAME=seezoon-boot
 APP_JAR_FILE=$APP_NAME".jar"
 LOG_PATH=./logs/catlina.out
-
+APP_LOG_PATH=./logs/seezoon.log
 pid=0
 
 SOURCE_CODE_PATH=/usr/local/project-build/source-code
@@ -66,7 +66,7 @@ deploy_java(){
 	mvn clean package
 	cd $SHELL_PWD
 	stop 
-	mv -f ${SOURCE_CODE_PATH}/target/${APP_JAR_FILE} $SHELL_PWD
+	mv -f ${SOURCE_CODE_PATH}/${APP_NAME}/target/${APP_JAR_FILE} $SHELL_PWD
 	start
 }
 deploy_static(){
@@ -115,12 +115,15 @@ deploy(){
 	    exit;;
     esac
 }
-
+log(){
+	less $APP_LOG_PATH
+}
 case $1 in    
       start) start;;    
       stop)  stop;;   
       restart)  restart;;    
       status)  status;;     
-      build) deploy;;
-      *)  echo "require start|stop|restart|status|deploy" ;;    
+      deploy) deploy;;
+      log) log;;
+      *)  echo "require start|stop|restart|status|deploy|log" ;;    
 esac  

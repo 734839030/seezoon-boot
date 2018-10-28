@@ -85,20 +85,17 @@ deploy(){
 	echo "(0) Exit Menu"
 	echo "----------------------------------"
 	
-	:<<!
-	首次部署时候需要检出代码
-	git clone xxx.git
-	svn checkout xxxx --username huangdengfeng
-	!
+	# 首次部署时候需要检出代码
+	# git clone xxx.git
+	# svn checkout xxxx --username huangdengfeng
+	
 	read input
 	cd ${SOURCE_CODE_PATH}/${APP_NAME}
 	git reset --hard
 	git pull
 	
-	:<<!
-	svn 命令
-	svn update
-	!
+	# svn 命令
+	# svn update
 	
 	case $input in
 	    1)
@@ -124,6 +121,6 @@ case $1 in
       stop)  stop;;   
       restart)  restart;;    
       status)  status;;     
-      build) build;;
+      build) deploy;;
       *)  echo "require start|stop|restart|status|deploy" ;;    
 esac  

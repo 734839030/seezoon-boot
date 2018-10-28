@@ -1,0 +1,17 @@
+{"properties": [
+  {
+    "name": "admin.path",
+    "type": "java.lang.String",
+    "description": "A description for 'admin.path'"
+  },
+  {
+    "name": "cors.switch",
+    "type": "java.lang.String",
+    "description": "A description for 'cors.switch'"
+  },
+  {
+    "name": "file.storage",
+    "type": "java.lang.String",
+    "description": "A description for 'file.storage'"
+  }
+]}

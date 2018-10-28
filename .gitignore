@@ -2,7 +2,9 @@ a# for eclipse
 .settings/
 */.DS_Store
 .DS_Store
+.springBeans
 .project
+.factorypath
 */.project
 .classpath
 */.classpath

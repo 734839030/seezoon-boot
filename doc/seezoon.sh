@@ -22,6 +22,7 @@ start(){
 		if [ ! -d logs  ];
 	  		then mkdir logs
 		fi
+		
 	    nohup java -jar $JAVA_OPTS $APP_JAR_FILE --spring.profiles.active=$ENV > $LOG_PATH 2>&1 &  
 	    echo "-------------starting --------------------"  
 	    echo "-------------stared ctrl + c to exit   --------------------"  

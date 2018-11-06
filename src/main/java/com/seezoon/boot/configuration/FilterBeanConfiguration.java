@@ -10,6 +10,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
 import com.seezoon.boot.context.filter.TraceFilter;
+import com.seezoon.front.session.FrontSessionInterceptor;
 
 /**
  * spring boot filter 顺序从小到大

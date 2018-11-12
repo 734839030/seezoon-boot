@@ -7,6 +7,9 @@
 <#if hasFileUpload>
 @@include('../common/file.html')
 </#if>
+<#if hasDateTime>
+@@include('../common/datetime.html')
+</#if>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 	<div class="wrapper">
@@ -75,10 +78,18 @@
 										<label>${columnInfo.columnComment}</label> <input type="text" class="form-control date search" placeholder="${columnInfo.columnComment}" name="${columnInfo.javaFieldName}"  way-data="${columnInfo.javaFieldName}">
 									</div>
 									</#if>
+									<#if columnInfo.inputType! == "datetime">
+									<div class="form-group">
+										<label>${columnInfo.columnComment}</label> <input type="text" class="form-control datetime search" placeholder="${columnInfo.columnComment}" name="${columnInfo.javaFieldName}"  way-data="${columnInfo.javaFieldName}">
+									</div>
+									</#if>
 								</#if>
 							</#list>
 							<button type="button" class="btn btn-default sf-permission-ctl" id="search" data-sf-permission="${moduleName}:${functionName}:qry">
 								<i class="fa fa-search"></i>
+							</button>
+							<button type="button" class="btn btn-default" id="reset-search">
+								<i class="fa fa-eraser"></i>
 							</button>
 							</#if>
 							<div class="btn-group pull-right">
@@ -200,6 +211,15 @@
 									<label class="col-sm-2 control-label">${columnInfo.columnComment}<#if columnInfo.nullable! !="1"><font class="text-red">*</font></#if></label>
 									<div class="col-sm-5">
 										<input type="text" class="form-control date" way-data="${columnInfo.javaFieldName}" 
+											name="${columnInfo.javaFieldName}" <#if columnInfo.nullable! !="1">id="${columnInfo.javaFieldName}"</#if> >
+									</div>
+								</div>
+							</#if>
+							<#if columnInfo.inputType! == "datetime">
+								<div class="form-group">
+									<label class="col-sm-2 control-label">${columnInfo.columnComment}<#if columnInfo.nullable! !="1"><font class="text-red">*</font></#if></label>
+									<div class="col-sm-5">
+										<input type="text" class="form-control datetime" way-data="${columnInfo.javaFieldName}" 
 											name="${columnInfo.javaFieldName}" <#if columnInfo.nullable! !="1">id="${columnInfo.javaFieldName}"</#if> >
 									</div>
 								</div>

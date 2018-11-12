@@ -129,12 +129,16 @@ public class GeneratorService extends BaseService{
 		List<GenColumnInfo> columnInfos = sysGen.getColumnInfos();
 		for (GenColumnInfo column : columnInfos) {
 			String javaType = column.getJavaType();
+			String inputType = column.getInputType();
 			if (!ArrayUtils.contains(defaultFields, column.getDbColumnName())) {
 				if ("BigDecimal".equals(javaType)) {
 					sysGen.setHasBigDecimal(true);
 				}
 				if ("Date".equals(javaType)) {
 					sysGen.setHasDate(true);
+				}
+				if ("datetime".equals(inputType)) {
+					sysGen.setHasDateTime(true);
 				}
 				if (Constants.YES.equals(column.getSearch())) {
 					sysGen.setHasSearch(true);

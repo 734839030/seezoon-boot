@@ -101,6 +101,10 @@ public class SysGen extends BaseEntity<String> {
 	 * 是否富文本
 	 */
 	private boolean hasRichText;
+	/**
+	 * 时间选择控件
+	 */
+	private boolean hasDateTime;
 	
 	/**
 	 * 是否有文件上传
@@ -225,6 +229,14 @@ public class SysGen extends BaseEntity<String> {
 
 	public void setHasFileUpload(boolean hasFileUpload) {
 		this.hasFileUpload = hasFileUpload;
+	}
+
+	public boolean isHasDateTime() {
+		return hasDateTime;
+	}
+
+	public void setHasDateTime(boolean hasDateTime) {
+		this.hasDateTime = hasDateTime;
 	}
 
 }

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>@@include('../common/header.html',{"title":"登录日志"})
+@@include('../common/datetime.html')
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 	<div class="wrapper">
@@ -43,6 +44,9 @@
 							</div>
 							<button type="button" class="btn btn-default sf-permission-ctl" id="search" data-sf-permission="sys:loginlog:qry">
 								<i class="fa fa-search"></i>
+								</button>
+							<button type="button" class="btn btn-default" id="reset-search">
+								<i class="fa fa-eraser"></i>
 							</button>
 							<div class="btn-group pull-right">
 								<button type="button" class="btn btn-danger sf-permission-ctl" id="delete" data-sf-permission="sys:loginlog:delete">

@@ -12,7 +12,7 @@ import com.seezoon.boot.common.dao.BaseDao;
 import com.seezoon.boot.context.utils.MdcUtil;
 
 @SpringBootApplication
-@MapperScan(basePackages= {"com.seezoon"},markerInterface=BaseDao.class)
+@MapperScan(basePackages= {"com.seezoon.service.modules.*.dao"},markerInterface=BaseDao.class)
 @EnableAspectJAutoProxy(proxyTargetClass=true)
 @EnableTransactionManagement(proxyTargetClass=true)
 @EnableRedisHttpSession(redisNamespace="${spring.session.redis.namespace}",maxInactiveIntervalInSeconds=7200)

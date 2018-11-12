@@ -17,7 +17,7 @@ $(function() {
 			way.set("model.form.data",null);
 			<#list columnInfos as columnInfo>
 		    <#if columnInfo.inputType! == "richtext">
-		    if (	editor${columnInfo.javaFieldName ? cap_first}) {
+		    if (editor${columnInfo.javaFieldName ? cap_first}) {
 		    	editor${columnInfo.javaFieldName ? cap_first}.html('');
 		    }
 		    </#if>
@@ -56,6 +56,7 @@ $(function() {
 			})
 		},
 		setViewDataById:function(id){
+			$("#modal-view [way-data]").text(null); 
 			$.get(this.path + "/get.do",{id:id},function(respone){
 				way.set("model.view",respone.data);
 				<#list columnInfos as columnInfo>
@@ -101,7 +102,7 @@ $(function() {
 		</#if>
 	   	</#list>
 		<#list columnInfos as columnInfo>
-		<#if columnInfo.inputType! == "date" && columnInfo.nullable! !="1" && columnInfo.javaFieldName != "createDate" && columnInfo.javaFieldName != "updateDate">
+		<#if (columnInfo.inputType! == "date" || columnInfo.inputType! == "datetime")&& columnInfo.nullable! !="1" && columnInfo.javaFieldName != "createDate" && columnInfo.javaFieldName != "updateDate">
 		if(!$("#${columnInfo.javaFieldName}").val()){
 			layer.msg("${columnInfo.columnComment}不能为空");
 			$('#data-form').bootstrapValidator('disableSubmitButtons', false);  

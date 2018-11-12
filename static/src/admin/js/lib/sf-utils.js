@@ -163,6 +163,19 @@ $(function() {
 					$(this).datepicker("setDate",date);
 				}
 			});
+			//时间控件
+			$(".datetime").attr("readonly", "readonly");
+			$(".datetime").each(function(){
+				var minuteStep = $(this).data("date-step");
+				$(this).datetimepicker({
+					format: 'yyyy-mm-dd hh:ii',
+					language : 'zh-CN',
+					autoclose: true,
+					todayHighlight:true,
+					minuteStep:typeof(minuteStep)!='undefined'? minuteStep : 5,
+				});
+			});
+			
 		},
 		//按钮权限控制
 		bntPermissionHandler:function(){

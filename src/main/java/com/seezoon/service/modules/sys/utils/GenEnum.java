@@ -62,9 +62,13 @@ public class GenEnum {
 		 */
 		RADIO("radio"),
 		/**
-		 * 时间选择器
+		 * 日期选择器
 		 */
 		DATE("date"),
+		/**
+		 * 时间选择器
+		 */
+		DATE_TIME("datetime"),
 		/**
 		 * 文本域
 		 */

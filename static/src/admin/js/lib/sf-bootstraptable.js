@@ -6,7 +6,23 @@ $(function(){
 				way.set("model.search."+$(this).attr("way-data"),$(this).val());
 			});
 			return way.get("model.search");
+		},
+		//搜索条件重置特殊逻辑覆盖
+		searchReset:function(){
+			//true 走默认逻辑，false 则不需要走默认逻辑
+			return true;
 		}
+	});
+	//默认重置
+	$("#reset-search").click(function(){
+		if (!$.searchReset()) {
+			return;
+		}
+		var $form = $(this).parents("form")[0];
+		way.set("model.search",null);
+		$form.reset();
+	    $(this).parents("form").find("select.selectpicker").selectpicker('refresh'); 
+	    $.searchReset();
 	});
 	/**
 	 * 验证框架默认属性

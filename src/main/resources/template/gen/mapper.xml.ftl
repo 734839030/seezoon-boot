@@ -70,7 +70,7 @@
     </when>
     <otherwise>
    <!-- 默认排序设置 -->
-   
+   order by create_date desc
     </otherwise>
     </choose>
   </select>

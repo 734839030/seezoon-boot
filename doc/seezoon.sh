@@ -3,9 +3,9 @@
 ENV=uat
 SHELL_PWD=`pwd`
 JAVA_OPTS="-Xmx512m -Xms128m -XX:+UseG1GC -verbose:gc -XX:+PrintGC -XX:+PrintGCDetails -XX:+PrintHeapAtGC -XX:+PrintGCDateStamps -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=5 -XX:GCLogFileSize=10M  -Xloggc:./logs/gc.log -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=./logs/dump"
+SERVER_OTPS="--server.port=8081 --server.connection-timeout.seconds=10 --server.tomcat.max-connections=2000 --server.tomcat.accept-count=1000 --server.tomcat.max-threads=2000"
 APP_NAME=seezoon-boot
 APP_JAR_FILE=$APP_NAME".jar"
-LOG_PATH=./logs/catlina.out
 APP_LOG_PATH=./logs/seezoon.log
 pid=0
 
@@ -23,10 +23,10 @@ start(){
 	  		then mkdir logs
 		fi
 		
-	    nohup java -jar $JAVA_OPTS $APP_JAR_FILE --spring.profiles.active=$ENV > $LOG_PATH 2>&1 &  
+	    nohup java -jar $JAVA_OPTS $APP_JAR_FILE --spring.profiles.active=$ENV $SERVER_OTPS > $APP_LOG_PATH 2>&1 &  
 	    echo "-------------starting --------------------"  
 	    echo "-------------stared ctrl + c to exit   --------------------"  
-	    tail -f $LOG_PATH  
+	    tail -f $APP_LOG_PATH  
 	 else  
 	      echo "$APP_NAME is already running PID: $pid"     
   	fi  

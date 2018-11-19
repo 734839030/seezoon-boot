@@ -1,5 +1,5 @@
 $(function() {
-		var  editorRichText = KindEditor.create("textarea[name='richText']",{
+           var editorRichText = KindEditor.create("textarea[name='richText']",{
 	        	syncType:'auto',//无效
 	    		items:items,
 	    		zIndex:99999999,
@@ -11,7 +11,7 @@ $(function() {
 			$("#data-form").bootstrapValidator('resetForm', true);
 			//表单默认值可以在这里设置
 			way.set("model.form.data",null);
-		    if (	editorRichText) {
+		    if (editorRichText) {
 		    	editorRichText.html('');
 		    }
 		     	$("#imageUploadFileContainer").empty();
@@ -48,12 +48,12 @@ $(function() {
 			})
 		},
 		setViewDataById:function(id){
+			$("#modal-view [way-data]").text(null); 
 			$.get(this.path + "/get.do",{id:id},function(respone){
 				way.set("model.view",respone.data);
-				 way.set("model.view.inputSelect",$.getDictName('yes_no',respone.data.inputSelect));
+				    way.set("model.view.inputSelect",$.getDictName('yes_no',respone.data.inputSelect));
 				    way.set("model.view.inputRadio",$.getDictName('yes_no',respone.data.inputRadio));
 				    way.set("model.view.inputCheckbox",$.getDictName('yes_no',respone.data.inputCheckbox));
-
 					if (respone.data.imageArray) {
 					 var files = [];
 					 $.each(respone.data.imageArray,function(i,v){
@@ -78,7 +78,7 @@ $(function() {
 	$("#data-form").bootstrapValidator().on("success.form.bv", function(e) {// 提交
 		e.preventDefault();
 		 editorRichText.sync();
-		 		if(!$("#inputDate").val()){
+		if(!$("#inputDate").val()){
 			layer.msg("时间不能为空");
 			$('#data-form').bootstrapValidator('disableSubmitButtons', false);  
 			return false;
@@ -174,7 +174,7 @@ $(function() {
 			sortable : true,
 			order : 'desc',
             formatter : function(value, row, index) {
-			    return "<a href='#' class='view' data-id='" + row.id + "'>" + value + "</a>"
+			    return "<a href='#' class='view text-success' data-id='" + row.id + "'>" + value + "</a>"
 			 }
 			},
 			{

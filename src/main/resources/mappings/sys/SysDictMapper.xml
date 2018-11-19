@@ -24,7 +24,7 @@
     from sys_dict
     where id = #{id,jdbcType=VARCHAR}
   </select>
-  <select id="findList" resultMap="BaseResultMap" parameterType="com.seezoon.service.modules.sys.entity.SysParam" >
+  <select id="findList" resultMap="BaseResultMap"  parameterType="com.seezoon.service.modules.sys.entity.SysParam" >
     select 
     <include refid="Base_Column_List" />
     from sys_dict
@@ -41,9 +41,14 @@
     		${dsf}
     </where>
     <!-- 有注入安全漏洞 后台系统忽略可以提高开发速度 -->
-		<if test="sortField != null and sortField != '' and direction != null and direction !=''">
-			order by ${sortField} ${direction}
-		</if>
+		<choose>
+			<when test="sortField != null and sortField != '' and direction != null and direction !=''">
+							order by ${sortField} ${direction}
+			</when>
+			<otherwise>
+			order by type asc,sort asc
+			</otherwise>
+		</choose>
   </select>
   <select id="findTypes" resultType="java.lang.String">
   	select distinct type from sys_dict 

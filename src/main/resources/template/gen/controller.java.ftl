@@ -24,8 +24,8 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import com.seezoon.service.modules.sys.entity.SysFile;
 import com.seezoon.service.modules.sys.service.SysFileService;
-import com.seezoon.admin.common.utils.FileUtils;
-import com.seezoon.admin.common.file.handler.FileHandler;
+import com.seezoon.boot.common.utils.FileUtils;
+import com.seezoon.boot.common.file.handler.FileHandler;
 import com.seezoon.service.modules.sys.dto.FileInfo;
 import com.seezoon.boot.common.Constants;
 </#if>

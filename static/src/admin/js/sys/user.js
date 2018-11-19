@@ -248,7 +248,7 @@ $(function() {
 					},
 			formatter : function(value, row, index) {
 				if (value) {
-					return "<image src='" + value  + "' class='viewImages' style='width:40px;height:40px;' data-url='" + value + "'/>";
+					return "<image src='" + value  + "' class='viewImages' style='width:30px;height:30px;' data-url='" + value + "'/>";
 				} else {
 					return value;
 				}

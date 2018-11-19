@@ -2,6 +2,16 @@ package com.seezoon.boot.common.file.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+/**
+ *  参见阿里云oss 
+	file.aliyun.urlPrefix=https://seezoon-file.oss-cn-hangzhou.aliyuncs.com
+	file.aliyun.bucketName=seezoon-file
+	file.aliyun.endpoint=oss-cn-hangzhou.aliyuncs.com
+	file.aliyun.accessKeyId=LTAIe6QxGGGrTSSe
+	file.aliyun.accessKeySecret=xxxxxxxxxxxxx
+ * @author hdf
+ *
+ */
 @ConfigurationProperties(prefix = "file.aliyun")
 public class AliOssProperties {
 	

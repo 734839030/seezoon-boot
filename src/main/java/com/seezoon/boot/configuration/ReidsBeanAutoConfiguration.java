@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import com.alibaba.fastjson.support.spring.GenericFastJsonRedisSerializer;
@@ -35,9 +36,11 @@ public class ReidsBeanAutoConfiguration {
         redisTemplate.setKeySerializer(new NameSpaceStringRedisSerializer(namespace));
         redisTemplate.setHashKeySerializer(stringRedisSerializer);
         //使用fast json 序列化
-        GenericFastJsonRedisSerializer genericFastJsonRedisSerializer = new GenericFastJsonRedisSerializer();
-        redisTemplate.setValueSerializer(genericFastJsonRedisSerializer);
-        redisTemplate.setHashValueSerializer(genericFastJsonRedisSerializer);
+       GenericFastJsonRedisSerializer redisSerializer = new GenericFastJsonRedisSerializer();
+        //GenericJackson2JsonRedisSerializer redisSerializer = new GenericJackson2JsonRedisSerializer();
+        redisTemplate.setDefaultSerializer(redisSerializer);
+        redisTemplate.setValueSerializer(redisSerializer);
+        redisTemplate.setHashValueSerializer(redisSerializer);
         redisTemplate.afterPropertiesSet();
         return redisTemplate;
     }

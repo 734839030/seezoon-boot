@@ -1,13 +1,11 @@
 package com.seezoon.boot.context.dto;
 
-import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
-
 /**
  * 后台用户线程上下文对象
  * @author hdf
  *
  */
-public class AdminUser extends SpringBootServletInitializer{
+public class AdminUser {
 
 	/**
 	 * 用户id
@@ -18,7 +16,10 @@ public class AdminUser extends SpringBootServletInitializer{
 	 */
 	private String dsf;
 
-	
+	public AdminUser() {
+		super();
+	}
+
 	public AdminUser(String userId,String dsf) {
 		super();
 		this.userId = userId;

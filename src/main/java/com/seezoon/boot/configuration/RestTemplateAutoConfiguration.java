@@ -20,6 +20,6 @@ public class RestTemplateAutoConfiguration {
 		factory.setConnectTimeout(DEFAULT_CONNECT_TIMEOUT);
 		RestTemplate restTemplate = new RestTemplate(factory);
 		restTemplate.getMessageConverters().set(1, new StringHttpMessageConverter(StandardCharsets.UTF_8));
-		return null;
+		return restTemplate;
 	}
 }

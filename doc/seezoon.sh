@@ -1,13 +1,15 @@
 #!/bin/bash
 
 ENV=uat
-SHELL_PWD=`pwd`
+
 JAVA_OPTS="-Xmx512m -Xms128m -XX:+UseG1GC -verbose:gc -XX:+PrintGC -XX:+PrintGCDetails -XX:+PrintHeapAtGC -XX:+PrintGCDateStamps -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=5 -XX:GCLogFileSize=10M  -Xloggc:./logs/gc.log -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=./logs/dump"
 SERVER_OTPS="--server.port=8081 --server.connection-timeout.seconds=10 --server.tomcat.max-connections=2000 --server.tomcat.accept-count=1000 --server.tomcat.max-threads=2000"
 PROJECT_PATH=$(cd `dirname $0`; pwd)
+cd $PROJECT_PATH
 APP_NAME="${PROJECT_PATH##*/}"
 APP_JAR_FILE=$APP_NAME".jar"
 APP_LOG_PATH=./logs/seezoon.log
+SHELL_PWD=$PROJECT_PATH
 pid=0
 
 SOURCE_CODE_PATH=/usr/local/project-build/source-code

@@ -42,7 +42,7 @@
        </appender>
     <logger name="org.apache" level="INFO" />    
     <logger name="org.springframework" level="INFO" />  
-    <logger name="org.springframework.jdbc.datasource" level="DEBUG" />  
+    <logger name="org.springframework.jdbc" level="DEBUG" />  
     <logger name="io.lettuce" level="ERROR" />  
     <logger name="io.netty" level="ERROR" />
     <logger name="org.hibernate" level="ERROR" />    

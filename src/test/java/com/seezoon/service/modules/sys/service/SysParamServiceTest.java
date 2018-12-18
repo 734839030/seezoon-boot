@@ -12,6 +12,7 @@ public class SysParamServiceTest extends BaseApplicationTest{
 	private SysParamService sysParamService;
 	@Test
 	public void testSave() {
+		sysParamService.findList(null);
 	}
 
 }

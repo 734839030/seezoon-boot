@@ -2,13 +2,14 @@ package com.seezoon.boot.common.http;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * Http client 的默认配置项
  * 
  * @author hdf 2018年4月20日
  */
-@EnableConfigurationProperties
+@Configuration
 @ConfigurationProperties(prefix="rest")
 public class HttpClientConfig {
 

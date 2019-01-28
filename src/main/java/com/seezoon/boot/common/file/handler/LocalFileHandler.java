@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 
@@ -61,7 +62,9 @@ public class LocalFileHandler implements FileHandler {
 
 	@Override
 	public String getFullUrl(String relativePath) {
-		Assert.hasLength(relativePath,"相对路径为空");
-		return urlPrefix + relativePath;
+		if (StringUtils.isNotEmpty(relativePath)) {
+			return urlPrefix + relativePath;
+		}
+		return null;
 	}
 }

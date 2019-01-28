@@ -3,6 +3,8 @@ package com.seezoon.boot.common.file.handler;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 import com.aliyun.oss.OSSClient;
@@ -78,8 +80,10 @@ public class AliFileFileHandler implements FileHandler{
 	}
 	@Override
 	public String getFullUrl(String relativePath) {
-		Assert.hasLength(relativePath,"相对路径为空");
-		return urlPrefix + relativePath;
+		if (StringUtils.isNotEmpty(relativePath)) {
+			return urlPrefix + relativePath;
+		}
+		return null;
 	}
 
 }

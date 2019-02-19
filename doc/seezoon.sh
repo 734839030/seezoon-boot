@@ -109,8 +109,8 @@ deploy(){
 	    deploy_static
 	    exit;;
 	    3)
-	    deploy_java
 	    deploy_static
+	    deploy_java
 	    exit;;
 	    0)
 	    exit;;

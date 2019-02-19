@@ -12,8 +12,8 @@ APP_LOG_PATH=./logs/seezoon.log
 SHELL_PWD=$PROJECT_PATH
 pid=0
 
-SOURCE_CODE_PATH=/usr/local/project-build/source-code
-NGINX_STATIC_PATH=/usr/local/nginx/html
+SOURCE_CODE_PATH=/usr/local/project-build/${APP_NAME}/source-code
+NGINX_STATIC_PATH=/usr/local/nginx/html/${APP_NAME}/
 
 
 checkpid(){

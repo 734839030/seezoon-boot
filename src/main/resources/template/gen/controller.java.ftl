@@ -90,7 +90,7 @@ public class ${className}Controller extends BaseController {
 		int cnt = ${className?uncap_first}Service.save(${className?uncap_first});
 		return ResponeModel.ok(cnt);
 	}
-	@PreAuthorize("hasAuthority('${moduleName}:${functionName}:qry')")
+	@PreAuthorize("hasAuthority('${moduleName}:${functionName}:update')")
 	@PostMapping("/update.do")
 	public ResponeModel update(@Validated ${className} ${className?uncap_first}, BindingResult bindingResult) {
 		int cnt = ${className?uncap_first}Service.updateSelective(${className?uncap_first});

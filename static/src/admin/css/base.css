@@ -22,3 +22,11 @@ img {
 body {
 	background-color: #ecf0f5;
 }
+.middle-modal {
+	width: 800px;
+	margin-left: -100px;
+}
+.big-modal {
+	width: 1000px;
+	margin-left: -200px;
+}

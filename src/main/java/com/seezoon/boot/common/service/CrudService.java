@@ -70,7 +70,11 @@ public class CrudService<D extends CrudDao<T>, T extends BaseEntity<? extends Se
 		Assert.notNull(t.getId(), "更新对象id为空");
 		Assert.hasLength(t.getId().toString(), "更新对象id为空");
 		t.setUpdateDate(new Date());
-		if (StringUtils.isEmpty(t.getUpdateBy())) {
+//		if (StringUtils.isEmpty(t.getUpdateBy())) {
+//			t.setUpdateBy(this.getOperatorUserId());
+//		}
+		String userId = this.getOperatorUserId();
+		if (StringUtils.isNotEmpty(userId)) {
 			t.setUpdateBy(this.getOperatorUserId());
 		}
 		int cnt = d.updateByPrimaryKeySelective(t);
@@ -85,7 +89,11 @@ public class CrudService<D extends CrudDao<T>, T extends BaseEntity<? extends Se
 		Assert.notNull(t.getId(), "更新对象id为空");
 		Assert.hasLength(t.getId().toString(), "更新对象id为空");
 		t.setUpdateDate(new Date());
-		if (StringUtils.isEmpty(t.getUpdateBy())) {
+//		if (StringUtils.isEmpty(t.getUpdateBy())) {
+//			t.setUpdateBy(this.getOperatorUserId());
+//		}
+		String userId = this.getOperatorUserId();
+		if (StringUtils.isNotEmpty(userId)) {
 			t.setUpdateBy(this.getOperatorUserId());
 		}
 		int cnt = d.updateByPrimaryKey(t);

@@ -30,11 +30,13 @@
 								<#if columnInfo.search! == "1">
 									<#if columnInfo.inputType! == "text">
 										<div class="form-group">
+										<label>${columnInfo.columnComment}</label>
 										<input type="text" class="form-control" placeholder="${columnInfo.columnComment}" name="${columnInfo.javaFieldName}" way-data="${columnInfo.javaFieldName}" <#if columnInfo.maxLength?? >maxlength="${columnInfo.maxLength?c}"</#if>  >
 										</div>
 									</#if>
 									<#if columnInfo.inputType! == "select">
 									<div class="form-group">
+										<label>${columnInfo.columnComment}</label>
 										<#if columnInfo.dictType?? && columnInfo.dictType!="">
 										<select class="form-control sf-select" way-data="${columnInfo.javaFieldName}"
 											name="${columnInfo.javaFieldName}" data-sf-dict-type="${columnInfo.dictType}">
@@ -50,6 +52,7 @@
 									</#if>
 									<#if columnInfo.inputType! == "zhengshu" || columnInfo.inputType! == "xiaoshu">
 									<div class="form-group">
+										<label>${columnInfo.columnComment}</label>
 										<input type="number" class="form-control" placeholder="${columnInfo.columnComment}" name="${columnInfo.javaFieldName}" way-data="${columnInfo.javaFieldName}">
 									</div>
 									</#if>

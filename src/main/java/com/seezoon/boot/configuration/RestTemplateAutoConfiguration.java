@@ -24,6 +24,7 @@ import org.apache.http.ssl.TrustStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.converter.StringHttpMessageConverter;
@@ -31,12 +32,24 @@ import org.springframework.web.client.RestTemplate;
 
 import com.seezoon.boot.common.http.HttpClientConfig;
 import com.seezoon.boot.common.http.HttpClientIdleConnectionMonitor;
+import com.seezoon.boot.common.http.SkipSslVerificationHttpRequestFactory;
 
 @Configuration
 public class RestTemplateAutoConfiguration {
 
 	@Autowired
 	private HttpClientConfig httpClientConfig;
+	
+	@Bean("nonePoolRestTemplate")
+	public RestTemplate nonePoolRestTemplate() {
+		RestTemplate nonePoolRestTemplate = new RestTemplate();
+		SkipSslVerificationHttpRequestFactory skipSslVerificationHttpRequestFactory = new SkipSslVerificationHttpRequestFactory();
+		skipSslVerificationHttpRequestFactory.setConnectTimeout(httpClientConfig.getConnectTimeout());
+		skipSslVerificationHttpRequestFactory.setReadTimeout(httpClientConfig.getSocketTimeout());
+		nonePoolRestTemplate.getMessageConverters().set(1, new StringHttpMessageConverter(StandardCharsets.UTF_8));
+		return nonePoolRestTemplate;
+	}
+	@Primary
 	@Bean
 	public  RestTemplate restTemplate() {
 		ClientHttpRequestFactory factory = clientHttpRequestFactory(); 

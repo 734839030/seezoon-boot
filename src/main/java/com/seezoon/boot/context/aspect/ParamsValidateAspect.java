@@ -33,7 +33,7 @@ public class ParamsValidateAspect {
 					BindingResult br = (BindingResult) arg;
 					if (br.hasErrors()) {
 						FieldError fieldError = br.getFieldErrors().get(0);
-						throw new ResponeException(ExceptionCode.PARAM_INVALID, "参数校验错误",
+						throw new ResponeException(ExceptionCode.PARAM_INVALID, "参数校验错误{0}:{1}",
 								new Object[] { fieldError.getField(), fieldError.getDefaultMessage() });
 					}
 				}

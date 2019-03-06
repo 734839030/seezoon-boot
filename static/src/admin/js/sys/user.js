@@ -1,4 +1,6 @@
 $(function() {
+	//解决用户名自动带入触发默认校验
+	$("#data-form").bootstrapValidator('resetForm', true);
 	var model = {
 		path : adminContextPath + "/sys/user",
 		resetDataForm : function() {

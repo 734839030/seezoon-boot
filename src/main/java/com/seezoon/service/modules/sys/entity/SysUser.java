@@ -9,6 +9,7 @@ import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Length;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.seezoon.boot.common.entity.BaseEntity;
 
 public class SysUser extends BaseEntity<String> {
@@ -35,13 +36,13 @@ public class SysUser extends BaseEntity<String> {
 	/**
 	 * 密码
 	 */
-	@JSONField(serialize = false)
+	@JsonIgnore
 	private String password;
 
 	/**
 	 * 盐
 	 */
-	@JSONField(serialize = false)
+	@JsonIgnore
 	private String salt;
 
 	/**

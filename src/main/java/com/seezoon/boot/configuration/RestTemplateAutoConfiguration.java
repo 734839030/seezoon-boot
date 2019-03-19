@@ -42,10 +42,10 @@ public class RestTemplateAutoConfiguration {
 	
 	@Bean("nonePoolRestTemplate")
 	public RestTemplate nonePoolRestTemplate() {
-		RestTemplate nonePoolRestTemplate = new RestTemplate();
 		SkipSslVerificationHttpRequestFactory skipSslVerificationHttpRequestFactory = new SkipSslVerificationHttpRequestFactory();
 		skipSslVerificationHttpRequestFactory.setConnectTimeout(httpClientConfig.getConnectTimeout());
 		skipSslVerificationHttpRequestFactory.setReadTimeout(httpClientConfig.getSocketTimeout());
+		RestTemplate nonePoolRestTemplate = new RestTemplate(skipSslVerificationHttpRequestFactory);
 		nonePoolRestTemplate.getMessageConverters().set(1, new StringHttpMessageConverter(StandardCharsets.UTF_8));
 		return nonePoolRestTemplate;
 	}

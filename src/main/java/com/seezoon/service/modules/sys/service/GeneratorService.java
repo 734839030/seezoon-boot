@@ -42,7 +42,7 @@ public class GeneratorService extends BaseService{
 	private static final String javaControllerFolder = "/seezoon-code/src/main/java/com/seezoon/admin/modules/";
 	private static final String javaServiceFolder = "/seezoon-code/src/main/java/com/seezoon/service/modules/";
 	private static final String resourcesFolder = "/seezoon-code/src/main/resources/";
-	private static final String staticFolder = "/seezoon-code/static/";
+	private static final String staticFolder = "/seezoon-code/static/src/admin/";
 
 
 	/**

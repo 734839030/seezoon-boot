@@ -134,6 +134,8 @@ $(function() {
 				layer.msg("保存成功");
 				model.tableRefresh();
 				$("#form-panel").modal('toggle');
+			}else {
+				$('#data-form').bootstrapValidator('disableSubmitButtons', false);  
 			}
 		});
 	});

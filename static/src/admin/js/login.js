@@ -43,7 +43,7 @@ $(function() {
 		$.post(adminContextPath + "/login.do", {
 			username : username,
 			password : password,
-			rememberMe : $("input[name='rememberMe']").val()
+			rememberMe : $("input:checked[name='rememberMe']").val()
 		}, function(respone) {
 			if (respone.responeCode == "0") {
 				sessionStorage.clear();

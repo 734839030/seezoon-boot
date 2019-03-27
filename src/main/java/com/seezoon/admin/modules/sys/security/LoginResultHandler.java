@@ -3,6 +3,8 @@ package com.seezoon.admin.modules.sys.security;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -43,6 +45,7 @@ public class LoginResultHandler implements AuthenticationSuccessHandler,Authenti
 	private LoginSecurityService loginSecurityService;
 	@Autowired
 	private SysLoginLogService sysLoginLogService;
+	private ExecutorService threadPool = Executors.newCachedThreadPool();
 	@Override
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException exception) throws IOException, ServletException {
@@ -98,27 +101,33 @@ public class LoginResultHandler implements AuthenticationSuccessHandler,Authenti
 		String ip = IpUtils.getIpAddr(request);
 		String userAgentStr = request.getHeader("User-Agent");
 		UserAgent userAgent = UserAgent.parseUserAgentString(userAgentStr);  
-		Browser browser = userAgent.getBrowser();
-		OperatingSystem os = userAgent.getOperatingSystem();
-		String deviceName = os.getName() + " "+ os.getDeviceType();
-		String area = "";
-		String browserStr = browser.getName() +" "+ browser.getVersion(userAgentStr);
-		try {
-			if (StringUtils.isNotEmpty(ip)) {
-				HashMap<String, String> params = Maps.newHashMap();
-				params.put("ip",ip);
-				String ipInfo = HttpRequestUtils.doGet("http://ip.taobao.com/service/getIpInfo.php",params);
-				if (StringUtils.isNotEmpty(ipInfo)) {
-					JSONObject parseObject = JSON.parseObject(ipInfo);
-					if (parseObject.containsKey("data")) {
-						JSONObject data = parseObject.getJSONObject("data");
-						area = data.getString("region") + data.getString("city");
+		threadPool.execute(new Runnable() {
+			
+			@Override
+			public void run() {
+				Browser browser = userAgent.getBrowser();
+				OperatingSystem os = userAgent.getOperatingSystem();
+				String deviceName = os.getName() + " "+ os.getDeviceType();
+				String area = "";
+				String browserStr = browser.getName() +" "+ browser.getVersion(userAgentStr);
+				try {
+					if (StringUtils.isNotEmpty(ip)) {
+						HashMap<String, String> params = Maps.newHashMap();
+						params.put("ip",ip);
+						String ipInfo = HttpRequestUtils.doGet("http://ip.taobao.com/service/getIpInfo.php",params);
+						if (StringUtils.isNotEmpty(ipInfo)) {
+							JSONObject parseObject = JSON.parseObject(ipInfo);
+							if (parseObject.containsKey("data")) {
+								JSONObject data = parseObject.getJSONObject("data");
+								area = data.getString("region") + data.getString("city");
+							}
+						}
 					}
+				} catch (Exception e) {
+					logger.error("userId login log get location fail ",e);
 				}
+				sysLoginLogService.loginLogByLoginName(SysLoginLog.SUCCESS, loginName, ip, userAgentStr, browserStr, deviceName, area);
 			}
-		} catch (Exception e) {
-			logger.error("userId login log get location fail ",e);
-		}
-		sysLoginLogService.loginLogByLoginName(SysLoginLog.SUCCESS, loginName, ip, userAgentStr, browserStr, deviceName, area);
+		});
 	}
 }

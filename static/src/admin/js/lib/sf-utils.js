@@ -94,6 +94,7 @@ $(function() {
 				var inputName = $(this).data("sf-input-name");
 				var dictType = $(this).data("sf-dict-type");
 				var required = $(this).data("sf-required");
+				var group = $(this).data("bv-group");
 
 				var dictList = $.getDictList(dictType);
 				if (dictList) {
@@ -105,6 +106,10 @@ $(function() {
 						// 禁用
 						if (k.status == '0') {
 							k.disabled = "disabled";
+						}
+						//校验
+						if (group) {
+							k.group = group;
 						}
 					});
 				}

@@ -78,6 +78,9 @@ public class SysUserController extends BaseController {
 		if (SecurityUtils.isSuperAdmin(sysUser.getId()) && SysUser.STATUS_STOP.equals(sysUser.getStatus())) {
 			return ResponeModel.error("超级管理员不允许修改为禁用状态");
 		}
+		if (SecurityUtils.isSuperAdmin(sysUser.getId())  && !sysUser.getId().equals(SecurityUtils.getUserId())) {
+			return ResponeModel.error("超级管理员不允许修改");
+		}
 		//密码为空则不更新
 		sysUser.setPassword(StringUtils.trimToNull(sysUser.getPassword()));
 		int cnt = sysUserService.updateUserRoleSelective(sysUser);
@@ -89,6 +92,7 @@ public class SysUserController extends BaseController {
 		if (SecurityUtils.isSuperAdmin(id)) {
 			return ResponeModel.error("超级管理员不允许删除");
 		}
+		
 		if (SecurityUtils.getUserId().equals(id)) {
 			return ResponeModel.error("自己不能删除自己");
 		}

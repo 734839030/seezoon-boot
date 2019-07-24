@@ -1,5 +1,5 @@
-a# for eclipse
 .settings/
+.idea/
 */.DS_Store
 .DS_Store
 .springBeans
@@ -10,6 +10,7 @@ a# for eclipse
 */.classpath
 target/
 *.jar
+*.iml
 logs/
 dist/
 node_modules/

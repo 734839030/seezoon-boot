@@ -126,7 +126,7 @@ public class LoginResultHandler implements AuthenticationSuccessHandler,Authenti
 				} catch (Exception e) {
 					logger.error("userId login log get location fail ",e);
 				}
-				sysLoginLogService.loginLogByLoginName(SysLoginLog.SUCCESS, loginName, ip, userAgentStr, browserStr, deviceName, area);
+				sysLoginLogService.loginLogByLoginName(status, loginName, ip, userAgentStr, browserStr, deviceName, area);
 			}
 		});
 	}

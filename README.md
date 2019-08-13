@@ -1,5 +1,5 @@
 ## Seezoon项目介绍 (为seezoon-framework-all spring boot 版本) ##
-基于spring,mybatis,shiro面向接口开发的的一套后台管理系统，方便快速开发；采用常用的技术栈，降低学习成本，项目完全前后端分离，后端定义统一的接口格式，统一参数校验，统一权限控制，异常拦截，全局错误码等，让后续开发只需关注业务代码。
+基于spring boot,mybatis,面向接口开发的的一套后台管理系统，方便快速开发；采用常用的技术栈，降低学习成本，项目完全前后端分离，后端定义统一的接口格式，统一参数校验，统一权限控制，异常拦截，全局错误码等，让后续开发只需关注业务代码。
 
 项目定位于快速开发，所以不需要复杂的分布式，分模块的的开发方式，方便快速部署升级，项目支持按钮级别权限控制，自动控制按钮隐藏显示，按钮支持父子权限，支持本地和云存储。
 
@@ -36,7 +36,6 @@
 Spring Framework |依赖管理 |[https://docs.spring.io/spring/docs/5.0.6.BUILD-SNAPSHOT/spring-framework-reference/](https://docs.spring.io/spring/docs/5.0.6.BUILD-SNAPSHOT/spring-framework-reference/)
 Spring MVC | MVC|[https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html](https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html)
 Mybatis | ORM |[http://www.mybatis.org/mybatis-3/zh/index.html](http://www.mybatis.org/mybatis-3/zh/index.html)
-(https://docs.spring.io/spring-session/docs/2.0.3.BUILD-SNAPSHOT/reference/html5/)
 PageHelper|分页|[https://github.com/pagehelper/Mybatis-PageHelper](https://github.com/pagehelper/Mybatis-PageHelper)
 Druid |连接池|[https://github.com/alibaba/druid](https://github.com/alibaba/druid)
 AliOSS|云存储|[https://help.aliyun.com/document_detail/32008.html?spm=a2c4g.11186623.6.670.9vnD4m](https://help.aliyun.com/document_detail/32008.html?spm=a2c4g.11186623.6.670.9vnD4m)

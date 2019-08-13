@@ -27,6 +27,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
@@ -42,10 +43,12 @@ public class RestTemplateAutoConfiguration {
 	
 	@Bean("nonePoolRestTemplate")
 	public RestTemplate nonePoolRestTemplate() {
-		SkipSslVerificationHttpRequestFactory skipSslVerificationHttpRequestFactory = new SkipSslVerificationHttpRequestFactory();
-		skipSslVerificationHttpRequestFactory.setConnectTimeout(httpClientConfig.getConnectTimeout());
-		skipSslVerificationHttpRequestFactory.setReadTimeout(httpClientConfig.getSocketTimeout());
-		RestTemplate nonePoolRestTemplate = new RestTemplate(skipSslVerificationHttpRequestFactory);
+		SimpleClientHttpRequestFactory simpleClientHttpRequestFactory = new SimpleClientHttpRequestFactory();
+		//完全忽略ssl验证时候使用
+		//	SimpleClientHttpRequestFactory simpleClientHttpRequestFactory = new SkipSslVerificationHttpRequestFactory();
+		simpleClientHttpRequestFactory.setConnectTimeout(httpClientConfig.getConnectTimeout());
+		simpleClientHttpRequestFactory.setReadTimeout(httpClientConfig.getSocketTimeout());
+		RestTemplate nonePoolRestTemplate = new RestTemplate(simpleClientHttpRequestFactory);
 		nonePoolRestTemplate.getMessageConverters().set(1, new StringHttpMessageConverter(StandardCharsets.UTF_8));
 		return nonePoolRestTemplate;
 	}
@@ -71,7 +74,12 @@ public class RestTemplateAutoConfiguration {
 			throw new RuntimeException(e);
 		}
 		SSLConnectionSocketFactory sslSocketFactory = new SSLConnectionSocketFactory(sslContext,
-				NoopHostnameVerifier.INSTANCE);
+				null);
+
+		/*	 不校验证书和域名的一致性时候使用
+		SSLConnectionSocketFactory sslSocketFactory = new SSLConnectionSocketFactory(sslContext,
+				NoopHostnameVerifier.INSTANCE);*/
+
 		Registry<ConnectionSocketFactory> socketFactoryRegistry = RegistryBuilder.<ConnectionSocketFactory>create()
 				.register("http", PlainConnectionSocketFactory.getSocketFactory()).register("https", sslSocketFactory)
 				.build();

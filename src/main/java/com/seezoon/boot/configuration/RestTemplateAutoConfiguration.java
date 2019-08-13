@@ -73,8 +73,7 @@ public class RestTemplateAutoConfiguration {
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-		SSLConnectionSocketFactory sslSocketFactory = new SSLConnectionSocketFactory(sslContext,
-				null);
+		SSLConnectionSocketFactory sslSocketFactory = new SSLConnectionSocketFactory(sslContext);
 
 		/*	 不校验证书和域名的一致性时候使用
 		SSLConnectionSocketFactory sslSocketFactory = new SSLConnectionSocketFactory(sslContext,

@@ -43,7 +43,7 @@ gulp.task('include',function() {
 });
 gulp.task('watch',function() {
   // 监听到变化
-	return gulp.watch('src/**/*.*', function(event) {
+	return gulp.watch(['src/**/*.*','!src/admin/plugins/**'], function(event) {
   	console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
 	
 	if (event.type == 'added' || event.type == 'changed' ||  event.type =='renamed' ) {

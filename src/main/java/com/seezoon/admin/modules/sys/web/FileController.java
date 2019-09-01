@@ -1,18 +1,14 @@
 package com.seezoon.admin.modules.sys.web;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.regex.Pattern;
-
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletResponse;
-
+import com.google.common.collect.Lists;
+import com.seezoon.admin.modules.sys.service.FileService;
+import com.seezoon.boot.common.utils.CodecUtils;
+import com.seezoon.boot.common.utils.IdGen;
+import com.seezoon.boot.common.web.BaseController;
+import com.seezoon.boot.context.dto.ResponeModel;
+import com.seezoon.service.modules.sys.dto.FileInfo;
+import com.seezoon.service.modules.sys.entity.SysFile;
+import net.coobird.thumbnailator.Thumbnails;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
@@ -22,14 +18,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.google.common.collect.Lists;
-import com.seezoon.admin.modules.sys.service.FileService;
-import com.seezoon.boot.common.utils.CodecUtils;
-import com.seezoon.boot.common.utils.IdGen;
-import com.seezoon.boot.common.web.BaseController;
-import com.seezoon.boot.context.dto.ResponeModel;
-import com.seezoon.service.modules.sys.dto.FileInfo;
-import com.seezoon.service.modules.sys.entity.SysFile;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Pattern;
 
 @RestController
 @RequestMapping("${admin.path}/file")
@@ -62,8 +57,14 @@ public class FileController extends BaseController {
 		if (!pattern.matcher(file.getContentType()).matches()) {
 			return ResponeModel.error(file.getOriginalFilename() + "不是图片类型");
 		}
+		//压缩算法
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		Thumbnails.of(file.getInputStream()).outputQuality(0.5f).scale(1).toOutputStream(bos);
+		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bos.toByteArray());
 		return ResponeModel.ok(fileService.upload(file.getOriginalFilename(), file.getContentType(), file.getSize(),
-				file.getInputStream()));
+				byteArrayInputStream));
+		//return ResponeModel.ok(fileService.upload(file.getOriginalFilename(), file.getContentType(), file.getSize(),
+		//		file.getInputStream()));
 	}
 	@PostMapping("/uploadBase64.do")
 	public ResponeModel uploadBase64(String base64File) throws IOException {
@@ -85,8 +86,17 @@ public class FileController extends BaseController {
 		}
 		List<FileInfo> fileInfos = Lists.newArrayList();
 		for (MultipartFile file : files) {
-			FileInfo fileInfo = fileService.upload(file.getOriginalFilename(), file.getContentType(), file.getSize(),
-					file.getInputStream());
+
+			//压缩算法
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			Thumbnails.of(file.getInputStream()).outputQuality(0.5f).scale(1).toOutputStream(bos);
+			ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bos.toByteArray());
+			FileInfo fileInfo = fileService.upload(file.getOriginalFilename(), file.getContentType(), (long)byteArrayInputStream.available(),
+					byteArrayInputStream);
+
+
+			//FileInfo fileInfo = fileService.upload(file.getOriginalFilename(), file.getContentType(), file.getSize(),
+			//		file.getInputStream());
 			fileInfos.add(fileInfo);
 		}
 		return ResponeModel.ok(fileInfos);
@@ -99,8 +109,16 @@ public class FileController extends BaseController {
 	 */
 	@RequestMapping("/k_upload_image.do")
 	public Map<String,Object> umUpload(@RequestParam MultipartFile imgFile) throws IOException {
-		FileInfo fileInfo = fileService.upload(imgFile.getOriginalFilename(), imgFile.getContentType(), imgFile.getSize(),
-				imgFile.getInputStream());
+
+		//压缩算法
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		Thumbnails.of(imgFile.getInputStream()).outputQuality(0.5f).scale(1).toOutputStream(bos);
+		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bos.toByteArray());
+		FileInfo fileInfo = fileService.upload(imgFile.getOriginalFilename(), imgFile.getContentType(), (long)byteArrayInputStream.available(),
+				byteArrayInputStream);
+
+		//FileInfo fileInfo = fileService.upload(imgFile.getOriginalFilename(), imgFile.getContentType(), imgFile.getSize(),
+		//		imgFile.getInputStream());
 		Map<String,Object> map = new HashMap<String,Object>();
 		// 输出文件地址
 		map.put("url",fileInfo.getFullUrl());
@@ -118,7 +136,7 @@ public class FileController extends BaseController {
 		//第一步：设置响应类型
 		//response.setContentType("application/force-download");//应用程序强制下载,实际测试不需要
 		response.setContentType(sysFile.getContentType());
-		response.setHeader("Content-Disposition", "attachment;filename="+ CodecUtils.urlEncode(sysFile.getName())); 
+		response.setHeader("Content-Disposition", "attachment;filename="+ CodecUtils.urlEncode(sysFile.getName()));
 		response.setContentLength(in.available());
 		BufferedOutputStream bos = new BufferedOutputStream(outputStream);
 		BufferedInputStream bin = new BufferedInputStream(in);

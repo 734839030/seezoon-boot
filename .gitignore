@@ -1,17 +1,43 @@
-.settings/
-.idea/
-*/.DS_Store
-.DS_Store
-.springBeans
-.project
-.factorypath
-*/.project
-.classpath
-*/.classpath
+# maven ignore
 target/
 *.jar
+!.mvn/wrapper/*
+*.war
+*.zip
+*.tar
+*.tar.gz
+
+# eclipse ignore
+.settings/
+.project
+.classpath
+
+# idea ignore
+.idea/
+*.ipr
 *.iml
+*.iws
+*.factorypath
+
+# seezoon project
 logs/
 dist/
 node_modules/
 
+# temp ignore
+*.log
+*.cache
+*.diff
+*.patch
+*.tmp
+
+# system ignore
+.DS_Store
+Thumbs.db
+*.orig
+
+# flatten ignore
+.flattened-pom.xml
+
+# license check result
+license-list

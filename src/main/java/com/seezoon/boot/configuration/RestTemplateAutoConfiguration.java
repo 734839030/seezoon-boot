@@ -55,7 +55,7 @@ public class RestTemplateAutoConfiguration {
 	@Primary
 	@Bean
 	public  RestTemplate restTemplate() {
-		ClientHttpRequestFactory factory = clientHttpRequestFactory(); 
+		ClientHttpRequestFactory factory = clientHttpRequestFactory();
 		RestTemplate restTemplate = new RestTemplate(factory);
 		restTemplate.getMessageConverters().set(1, new StringHttpMessageConverter(StandardCharsets.UTF_8));
 		return restTemplate;

@@ -69,9 +69,9 @@ $(function() {
 			if (array) {
 				$.each($input, function(i, v) {
 					if (-1 != $.inArray($(v).val(), array)) {
-						$(v).attr("checked", "checked");
+						$(v).prop("checked", true);
 					} else {
-						$(v).removeAttr("checked");
+						$(v).prop("checked",false);
 					}
 				})
 			}

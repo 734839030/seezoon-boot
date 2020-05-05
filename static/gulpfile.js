@@ -1,8 +1,7 @@
 //npm install 即可，如果不行再使用下面
-//gulp 需要全局装 
-//npm install gulp gulp-file-include del express gulp-replace gulp-sequence -g  
+//gulp 需要全局装
+//npm install gulp@4.0.2 -g
 //新安装依赖命令后面加上 --save-dev
-var gulpSequence = require('gulp-sequence')
 var gulp = require('gulp');
 var fileinclude  = require('gulp-file-include');
 var replace = require('gulp-replace');
@@ -24,12 +23,12 @@ var setting = {
 }
 // 清空输出文件
 gulp.task('del', function() {
-	return del('dist/**/*'); 
+	return del('dist/**/*');
 });
 // 复制文件 不包含可以'!src/**'
 gulp.task('copy',function() {
 	return gulp.src(['src/*/plugins/**','src/*/img/**','src/*/css/**'], { base: setting.src })
-	  .pipe(gulp.dest(setting.dist)); 
+	  .pipe(gulp.dest(setting.dist));
 });
 // html include 处理 @@include('include/header.html')
 gulp.task('include',function() {
@@ -39,23 +38,19 @@ gulp.task('include',function() {
           basepath: '@file'
         }))
     .pipe(replace(setting.requestPathPlaceHolder , setting.requestUrlPreffix))
-	.pipe(gulp.dest(setting.dist)); 
+	.pipe(gulp.dest(setting.dist));
 });
 gulp.task('watch',function() {
-  // 监听到变化
-	return gulp.watch(['src/**/*.*','!src/admin/plugins/**'], function(event) {
-  	console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
-	
-	if (event.type == 'added' || event.type == 'changed' ||  event.type =='renamed' ) {
-	  	gulp.src(event.path, { base: setting.src })
-	  	.pipe(fileinclude({
-	          prefix: '@@',
-	          basepath: '@file'
-	      }))
-	      .pipe(replace(setting.requestPathPlaceHolder , setting.requestUrlPreffix))
-	      .pipe(gulp.dest(setting.dist));
-	  	  gulp.run("include");
-		}
+	return gulp.watch(['src/**/*.*','!src/admin/plugins/**']).on("all" , function(path,stats) {
+		console.log('File ' + stats + '  running tasks...');
+		gulp.src(stats, { base: setting.src })
+		.pipe(fileinclude({
+			prefix: '@@',
+			basepath: '@file'
+		}))
+		.pipe(replace(setting.requestPathPlaceHolder , setting.requestUrlPreffix))
+		.pipe(gulp.dest(setting.dist));
+		gulp.series("include");
 	});
 });
 gulp.task('start',function(cb) {
@@ -75,7 +70,7 @@ gulp.task('start',function(cb) {
 });
 
 // 默认任务
-gulp.task('default', gulpSequence(['copy'],['include'],['watch'],['start']));
+gulp.task('default', gulp.series('copy','include',gulp.parallel('start','watch')));
 gulp.task("env-uat",function(cb){
 	setting.requestUrlPreffix = uat;
 	cb();
@@ -84,6 +79,6 @@ gulp.task("env-prod",function(cb){
 	setting.requestUrlPreffix = prod;
 	cb();
 });
-gulp.task('uat', gulpSequence(['del'],['copy'],['env-uat'],['include']));
-gulp.task('prod', gulpSequence(['del'],['copy'],['env-prod'],['include']));
+gulp.task('uat', gulp.series('del','copy','env-uat','include'));
+gulp.task('prod', gulp.series('del','copy','env-prod','include'));
 

@@ -1,276 +1,276 @@
 package com.seezoon.service.modules.sys.entity;
 
-import java.util.Date;
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.seezoon.boot.common.entity.BaseEntity;
+import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-
-import org.hibernate.validator.constraints.Length;
-
-import com.alibaba.fastjson.annotation.JSONField;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.seezoon.boot.common.entity.BaseEntity;
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 public class SysUser extends BaseEntity<String> {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+    public static final String STATUS_NORMAL = "1";
+    public static final String STATUS_STOP = "0";
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
+    /**
+     * 部门
+     */
+    @NotNull
+    @Length(min = 1, max = 32)
+    private String deptId;
+    /**
+     * 登录名
+     */
+    @NotNull
+    @Length(min = 1, max = 50)
+    private String loginName;
+    /**
+     * 密码
+     */
+    @JsonIgnore
+    private String password;
+    /**
+     * 盐
+     */
+    @JsonIgnore
+    private String salt;
+    /**
+     * 姓名
+     */
+    @NotNull
+    @Length(min = 1, max = 50)
+    private String name;
+    /**
+     * 手机
+     */
+    @Length(max = 50)
+    private String mobile;
+    /**
+     * 用户头像
+     */
+    @Length(max = 100)
+    private String photo;
+    /**
+     * 邮箱
+     */
+    @Length(max = 50)
+    private String email;
+    /**
+     * 用户类型，业务扩展用，读取字典
+     */
+    @Length(max = 2)
+    private String userType;
+    /**
+     * 状态1：正常，0：禁用
+     */
+    @NotNull
+    @Length(min = 1, max = 1)
+    @Pattern(regexp = "1|0")
+    private String status;
+    /**
+     * DB 字段截止
+     **/
+    private String deptName;
+    /**
+     * 用户所拥有的角色ID
+     */
+    private List<String> roleIds;
+    private List<SysMenu> menus;
+    private Set<String> permissions;
+    //通过角色查询用户
+    private String roleId;
+    //是否分配了某个角色
+    private String roleAssigned;
+    /**
+     * 图像完整路径
+     */
+    private String photoFullUrl;
+    /**
+     * 上次登录时间
+     */
+    private Date lastLoginTime;
+    /**
+     * 登录ip
+     */
+    private String lastLoginIp;
+    /**
+     * 上次登录地区
+     */
+    private String lastLoginArea;
 
-	/**
-	 * 部门
-	 */
-	@NotNull
-	@Length(min = 1, max = 32)
-	private String deptId;
+    @Override
+    public boolean isNeedBak() {
+        return Boolean.TRUE;
+    }
 
-	/**
-	 * 登录名
-	 */
-	@NotNull
-	@Length(min = 1, max = 50)
-	private String loginName;
+    @Override
+    public String getTableAlias() {
+        return "u";
+    }
 
-	/**
-	 * 密码
-	 */
-	@JsonIgnore
-	private String password;
+    public String getDeptId() {
+        return deptId;
+    }
 
-	/**
-	 * 盐
-	 */
-	@JsonIgnore
-	private String salt;
+    public void setDeptId(String deptId) {
+        this.deptId = deptId == null ? null : deptId.trim();
+    }
 
-	/**
-	 * 姓名
-	 */
-	@NotNull
-	@Length(min = 1, max = 50)
-	private String name;
+    public String getLoginName() {
+        return loginName;
+    }
 
-	/**
-	 * 手机
-	 */
-	@Length(max = 50)
-	private String mobile;
+    public void setLoginName(String loginName) {
+        this.loginName = loginName == null ? null : loginName.trim();
+    }
 
-	/**
-	 * 用户头像
-	 */
-	@Length(max = 100)
-	private String photo;
+    public String getPassword() {
+        return password;
+    }
 
-	/**
-	 * 邮箱
-	 */
-	@Length(max = 50)
-	private String email;
+    public void setPassword(String password) {
+        this.password = password == null ? null : password.trim();
+    }
 
-	/**
-	 * 用户类型，业务扩展用，读取字典
-	 */
-	@Length(max = 2)
-	private String userType;
+    public String getSalt() {
+        return salt;
+    }
 
-	/**
-	 * 状态1：正常，0：禁用
-	 */
-	@NotNull
-	@Length(min = 1, max = 1)
-	@Pattern(regexp = "1|0")
-	private String status;
-	/** DB 字段截止 **/
-	private String deptName;
-	/**
-	 * 用户所拥有的角色ID
-	 */
-	private List<String> roleIds;
-	private List<SysMenu> menus;
-	public static final String STATUS_NORMAL = "1";
-	public static final String STATUS_STOP = "0";
-	//通过角色查询用户
-	private String roleId;
-	//是否分配了某个角色
-	private String roleAssigned;
-	/**
-	 * 图像完整路径
-	 */
-	private String photoFullUrl;
-	/**
-	 * 上次登录时间
-	 */
-	private Date lastLoginTime;
-	/**
-	 * 登录ip
-	 */
-	private String lastLoginIp;
-	/**
-	 * 上次登录地区
-	 */
-	private String lastLoginArea;
+    public void setSalt(String salt) {
+        this.salt = salt == null ? null : salt.trim();
+    }
 
-	@Override
-	public boolean isNeedBak() {
-		return Boolean.TRUE;
-	}
+    public String getName() {
+        return name;
+    }
 
-	@Override
-	public String getTableAlias() {
-		return "u";
-	}
-	public String getDeptId() {
-		return deptId;
-	}
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
+    }
 
-	public void setDeptId(String deptId) {
-		this.deptId = deptId == null ? null : deptId.trim();
-	}
+    public String getMobile() {
+        return mobile;
+    }
 
-	public String getLoginName() {
-		return loginName;
-	}
+    public void setMobile(String mobile) {
+        this.mobile = mobile == null ? null : mobile.trim();
+    }
 
-	public void setLoginName(String loginName) {
-		this.loginName = loginName == null ? null : loginName.trim();
-	}
+    public String getPhoto() {
+        return photo;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public void setPhoto(String photo) {
+        this.photo = photo == null ? null : photo.trim();
+    }
 
-	public void setPassword(String password) {
-		this.password = password == null ? null : password.trim();
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public String getSalt() {
-		return salt;
-	}
+    public void setEmail(String email) {
+        this.email = email == null ? null : email.trim();
+    }
 
-	public void setSalt(String salt) {
-		this.salt = salt == null ? null : salt.trim();
-	}
+    public String getUserType() {
+        return userType;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setUserType(String userType) {
+        this.userType = userType == null ? null : userType.trim();
+    }
 
-	public void setName(String name) {
-		this.name = name == null ? null : name.trim();
-	}
+    public String getStatus() {
+        return status;
+    }
 
-	public String getMobile() {
-		return mobile;
-	}
+    public void setStatus(String status) {
+        this.status = status == null ? null : status.trim();
+    }
 
-	public void setMobile(String mobile) {
-		this.mobile = mobile == null ? null : mobile.trim();
-	}
+    public String getDeptName() {
+        return deptName;
+    }
 
-	public String getPhoto() {
-		return photo;
-	}
+    public void setDeptName(String deptName) {
+        this.deptName = deptName;
+    }
 
-	public void setPhoto(String photo) {
-		this.photo = photo == null ? null : photo.trim();
-	}
+    public List<String> getRoleIds() {
+        return roleIds;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public void setRoleIds(List<String> roleIds) {
+        this.roleIds = roleIds;
+    }
 
-	public void setEmail(String email) {
-		this.email = email == null ? null : email.trim();
-	}
+    public List<SysMenu> getMenus() {
+        return menus;
+    }
 
-	public String getUserType() {
-		return userType;
-	}
+    public void setMenus(List<SysMenu> menus) {
+        this.menus = menus;
+    }
 
-	public void setUserType(String userType) {
-		this.userType = userType == null ? null : userType.trim();
-	}
+    public String getPhotoFullUrl() {
+        return photoFullUrl;
+    }
 
-	public String getStatus() {
-		return status;
-	}
+    public void setPhotoFullUrl(String photoFullUrl) {
+        this.photoFullUrl = photoFullUrl;
+    }
 
-	public void setStatus(String status) {
-		this.status = status == null ? null : status.trim();
-	}
+    public String getRoleId() {
+        return roleId;
+    }
 
-	public String getDeptName() {
-		return deptName;
-	}
+    public void setRoleId(String roleId) {
+        this.roleId = roleId;
+    }
 
-	public void setDeptName(String deptName) {
-		this.deptName = deptName;
-	}
+    public String getRoleAssigned() {
+        return roleAssigned;
+    }
 
-	public List<String> getRoleIds() {
-		return roleIds;
-	}
+    public void setRoleAssigned(String roleAssigned) {
+        this.roleAssigned = roleAssigned;
+    }
 
-	public void setRoleIds(List<String> roleIds) {
-		this.roleIds = roleIds;
-	}
+    public Date getLastLoginTime() {
+        return lastLoginTime;
+    }
 
-	public List<SysMenu> getMenus() {
-		return menus;
-	}
+    public void setLastLoginTime(Date lastLoginTime) {
+        this.lastLoginTime = lastLoginTime;
+    }
 
-	public void setMenus(List<SysMenu> menus) {
-		this.menus = menus;
-	}
+    public String getLastLoginIp() {
+        return lastLoginIp;
+    }
 
-	public String getPhotoFullUrl() {
-		return photoFullUrl;
-	}
+    public void setLastLoginIp(String lastLoginIp) {
+        this.lastLoginIp = lastLoginIp;
+    }
 
-	public void setPhotoFullUrl(String photoFullUrl) {
-		this.photoFullUrl = photoFullUrl;
-	}
+    public String getLastLoginArea() {
+        return lastLoginArea;
+    }
 
-	public String getRoleId() {
-		return roleId;
-	}
+    public void setLastLoginArea(String lastLoginArea) {
+        this.lastLoginArea = lastLoginArea;
+    }
 
-	public void setRoleId(String roleId) {
-		this.roleId = roleId;
-	}
+    public Set<String> getPermissions() {
+        return permissions;
+    }
 
-	public String getRoleAssigned() {
-		return roleAssigned;
-	}
-
-	public void setRoleAssigned(String roleAssigned) {
-		this.roleAssigned = roleAssigned;
-	}
-
-	public Date getLastLoginTime() {
-		return lastLoginTime;
-	}
-
-	public void setLastLoginTime(Date lastLoginTime) {
-		this.lastLoginTime = lastLoginTime;
-	}
-
-	public String getLastLoginIp() {
-		return lastLoginIp;
-	}
-
-	public void setLastLoginIp(String lastLoginIp) {
-		this.lastLoginIp = lastLoginIp;
-	}
-
-	public String getLastLoginArea() {
-		return lastLoginArea;
-	}
-
-	public void setLastLoginArea(String lastLoginArea) {
-		this.lastLoginArea = lastLoginArea;
-	}
+    public void setPermissions(Set<String> permissions) {
+        this.permissions = permissions;
+    }
 }

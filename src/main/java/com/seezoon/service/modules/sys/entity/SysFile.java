@@ -1,89 +1,88 @@
 package com.seezoon.service.modules.sys.entity;
 
-import javax.validation.constraints.NotNull;
-
+import com.seezoon.boot.common.entity.BaseEntity;
 import org.hibernate.validator.constraints.Length;
 
-import com.seezoon.boot.common.entity.BaseEntity;
+import javax.validation.constraints.NotNull;
 
-public class SysFile extends BaseEntity<String>{
+public class SysFile extends BaseEntity<String> {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * 名称
-	 */
-	@NotNull
-	@Length(min=1,max=200)
-	private String name;
+    /**
+     * 名称
+     */
+    @NotNull
+    @Length(min = 1, max = 200)
+    private String name;
 
-	/**
-	 * 文件类型
-	 */
-	@NotNull
-	@Length(min=1,max=100)
-	private String contentType;
+    /**
+     * 文件类型
+     */
+    @NotNull
+    @Length(min = 1, max = 100)
+    private String contentType;
 
-	/**
-	 * 文件大小
-	 */
-	@NotNull
-	private Long fileSize;
+    /**
+     * 文件大小
+     */
+    @NotNull
+    private Long fileSize;
 
-	/**
-	 * 地址
-	 */
-	@NotNull
-	@Length(min=1,max=200)
-	private String relativePath;
+    /**
+     * 地址
+     */
+    @NotNull
+    @Length(min = 1, max = 200)
+    private String relativePath;
 
-	/**下面字段不和DB映射**/
-	/**
-	 * 文件完整访问地址
-	 */
-	private String fullUrl;
-	
-	public String getName() {
-		return name;
-	}
+    /**下面字段不和DB映射**/
+    /**
+     * 文件完整访问地址
+     */
+    private String fullUrl;
 
-	public void setName(String name) {
-		this.name = name == null ? null : name.trim();
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getContentType() {
-		return contentType;
-	}
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
+    }
 
-	public void setContentType(String contentType) {
-		this.contentType = contentType == null ? null : contentType.trim();
-	}
+    public String getContentType() {
+        return contentType;
+    }
 
-	public String getRelativePath() {
-		return relativePath;
-	}
+    public void setContentType(String contentType) {
+        this.contentType = contentType == null ? null : contentType.trim();
+    }
 
-	public void setRelativePath(String relativePath) {
-		this.relativePath = relativePath == null ? null : relativePath.trim();
-	}
+    public String getRelativePath() {
+        return relativePath;
+    }
 
-	public Long getFileSize() {
-		return fileSize;
-	}
+    public void setRelativePath(String relativePath) {
+        this.relativePath = relativePath == null ? null : relativePath.trim();
+    }
 
-	public void setFileSize(Long fileSize) {
-		this.fileSize = fileSize;
-	}
+    public Long getFileSize() {
+        return fileSize;
+    }
 
-	public String getFullUrl() {
-		return fullUrl;
-	}
+    public void setFileSize(Long fileSize) {
+        this.fileSize = fileSize;
+    }
 
-	public void setFullUrl(String fullUrl) {
-		this.fullUrl = fullUrl;
-	}
+    public String getFullUrl() {
+        return fullUrl;
+    }
+
+    public void setFullUrl(String fullUrl) {
+        this.fullUrl = fullUrl;
+    }
 
 }

@@ -30,124 +30,128 @@ import java.util.regex.Pattern;
 @RequestMapping("${admin.path}/file")
 public class FileController extends BaseController {
 
-	private Pattern pattern = Pattern.compile("^image/.+$");
+    private Pattern pattern = Pattern.compile("^image/.+$");
 
-	@Autowired
-	private FileService fileService;
+    @Autowired
+    private FileService fileService;
 
-	@PostMapping("/uploadFile.do")
-	public ResponeModel uploadFile(@RequestParam MultipartFile file) throws IOException {
-		return ResponeModel.ok(fileService.upload(file.getOriginalFilename(), file.getContentType(), file.getSize(),
-				file.getInputStream()));
-	}
+    @PostMapping("/uploadFile.do")
+    public ResponeModel uploadFile(@RequestParam MultipartFile file) throws IOException {
+        return ResponeModel.ok(fileService.upload(file.getOriginalFilename(), file.getContentType(), file.getSize(),
+                file.getInputStream()));
+    }
 
-	@PostMapping("/uploadBatchFile.do")
-	public ResponeModel uploadBatchFile(@RequestParam MultipartFile[] files) throws IOException {
-		List<FileInfo> fileInfos = Lists.newArrayList();
-		for (MultipartFile file : files) {
-			FileInfo fileInfo = fileService.upload(file.getOriginalFilename(), file.getContentType(), file.getSize(),
-					file.getInputStream());
-			fileInfos.add(fileInfo);
-		}
-		return ResponeModel.ok(fileInfos);
-	}
+    @PostMapping("/uploadBatchFile.do")
+    public ResponeModel uploadBatchFile(@RequestParam MultipartFile[] files) throws IOException {
+        List<FileInfo> fileInfos = Lists.newArrayList();
+        for (MultipartFile file : files) {
+            FileInfo fileInfo = fileService.upload(file.getOriginalFilename(), file.getContentType(), file.getSize(),
+                    file.getInputStream());
+            fileInfos.add(fileInfo);
+        }
+        return ResponeModel.ok(fileInfos);
+    }
 
-	@PostMapping("/uploadImage.do")
-	public ResponeModel uploadImage(@RequestParam MultipartFile file) throws IOException {
-		if (!pattern.matcher(file.getContentType()).matches()) {
-			return ResponeModel.error(file.getOriginalFilename() + "不是图片类型");
-		}
-		//压缩算法
-		ByteArrayOutputStream bos = new ByteArrayOutputStream();
-		Thumbnails.of(file.getInputStream()).outputQuality(0.5f).scale(1).toOutputStream(bos);
-		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bos.toByteArray());
-		return ResponeModel.ok(fileService.upload(file.getOriginalFilename(), file.getContentType(), file.getSize(),
-				byteArrayInputStream));
-		//return ResponeModel.ok(fileService.upload(file.getOriginalFilename(), file.getContentType(), file.getSize(),
-		//		file.getInputStream()));
-	}
-	@PostMapping("/uploadBase64.do")
-	public ResponeModel uploadBase64(String base64File) throws IOException {
-		String[] contents = StringUtils.split(base64File, ":;,");
-		if (contents.length < 4) {
-			return ResponeModel.error("文件为空");
-		}
-		String contentType = contents[1];
-		byte[] file = CodecUtils.base64Decode(contents[3]);
-		return ResponeModel.ok(fileService.upload(IdGen.uuid() + "." +contentType.substring(contentType.lastIndexOf("/") + 1), contentType, (long)file.length,
-				new ByteArrayInputStream(file)));
-	}
-	@PostMapping("/uploadBatchImage.do")
-	public ResponeModel uploadBatchImage(@RequestParam MultipartFile[] files) throws IOException {
-		for (MultipartFile file : files) {
-			if (!pattern.matcher(file.getContentType()).matches()) {
-				return ResponeModel.error(file.getOriginalFilename() + "不是图片类型");
-			}
-		}
-		List<FileInfo> fileInfos = Lists.newArrayList();
-		for (MultipartFile file : files) {
+    @PostMapping("/uploadImage.do")
+    public ResponeModel uploadImage(@RequestParam MultipartFile file) throws IOException {
+        if (!pattern.matcher(file.getContentType()).matches()) {
+            return ResponeModel.error(file.getOriginalFilename() + "不是图片类型");
+        }
+        //压缩算法
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        Thumbnails.of(file.getInputStream()).outputQuality(0.5f).scale(1).toOutputStream(bos);
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bos.toByteArray());
+        return ResponeModel.ok(fileService.upload(file.getOriginalFilename(), file.getContentType(), file.getSize(),
+                byteArrayInputStream));
+        //return ResponeModel.ok(fileService.upload(file.getOriginalFilename(), file.getContentType(), file.getSize(),
+        //		file.getInputStream()));
+    }
 
-			//压缩算法
-			ByteArrayOutputStream bos = new ByteArrayOutputStream();
-			Thumbnails.of(file.getInputStream()).outputQuality(0.5f).scale(1).toOutputStream(bos);
-			ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bos.toByteArray());
-			FileInfo fileInfo = fileService.upload(file.getOriginalFilename(), file.getContentType(), (long)byteArrayInputStream.available(),
-					byteArrayInputStream);
+    @PostMapping("/uploadBase64.do")
+    public ResponeModel uploadBase64(String base64File) throws IOException {
+        String[] contents = StringUtils.split(base64File, ":;,");
+        if (contents.length < 4) {
+            return ResponeModel.error("文件为空");
+        }
+        String contentType = contents[1];
+        byte[] file = CodecUtils.base64Decode(contents[3]);
+        return ResponeModel.ok(fileService.upload(IdGen.uuid() + "." + contentType.substring(contentType.lastIndexOf("/") + 1), contentType, (long) file.length,
+                new ByteArrayInputStream(file)));
+    }
+
+    @PostMapping("/uploadBatchImage.do")
+    public ResponeModel uploadBatchImage(@RequestParam MultipartFile[] files) throws IOException {
+        for (MultipartFile file : files) {
+            if (!pattern.matcher(file.getContentType()).matches()) {
+                return ResponeModel.error(file.getOriginalFilename() + "不是图片类型");
+            }
+        }
+        List<FileInfo> fileInfos = Lists.newArrayList();
+        for (MultipartFile file : files) {
+
+            //压缩算法
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            Thumbnails.of(file.getInputStream()).outputQuality(0.5f).scale(1).toOutputStream(bos);
+            ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bos.toByteArray());
+            FileInfo fileInfo = fileService.upload(file.getOriginalFilename(), file.getContentType(), (long) byteArrayInputStream.available(),
+                    byteArrayInputStream);
 
 
-			//FileInfo fileInfo = fileService.upload(file.getOriginalFilename(), file.getContentType(), file.getSize(),
-			//		file.getInputStream());
-			fileInfos.add(fileInfo);
-		}
-		return ResponeModel.ok(fileInfos);
-	}
-	/**
-	 * kindeditor 专用
-	 * @param imgFile
-	 * @return
-	 * @throws IOException
-	 */
-	@RequestMapping("/k_upload_image.do")
-	public Map<String,Object> umUpload(@RequestParam MultipartFile imgFile) throws IOException {
+            //FileInfo fileInfo = fileService.upload(file.getOriginalFilename(), file.getContentType(), file.getSize(),
+            //		file.getInputStream());
+            fileInfos.add(fileInfo);
+        }
+        return ResponeModel.ok(fileInfos);
+    }
 
-		//压缩算法
-		ByteArrayOutputStream bos = new ByteArrayOutputStream();
-		Thumbnails.of(imgFile.getInputStream()).outputQuality(0.5f).scale(1).toOutputStream(bos);
-		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bos.toByteArray());
-		FileInfo fileInfo = fileService.upload(imgFile.getOriginalFilename(), imgFile.getContentType(), (long)byteArrayInputStream.available(),
-				byteArrayInputStream);
+    /**
+     * kindeditor 专用
+     *
+     * @param imgFile
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping("/k_upload_image.do")
+    public Map<String, Object> umUpload(@RequestParam MultipartFile imgFile) throws IOException {
 
-		//FileInfo fileInfo = fileService.upload(imgFile.getOriginalFilename(), imgFile.getContentType(), imgFile.getSize(),
-		//		imgFile.getInputStream());
-		Map<String,Object> map = new HashMap<String,Object>();
-		// 输出文件地址
-		map.put("url",fileInfo.getFullUrl());
-		// 状态
-		map.put("error",0);
-		return map;
-	}
-	
-	@RequestMapping("/down.do")
-	public void  down(@RequestParam  String relativePath,HttpServletResponse response) throws IOException {
-		ServletOutputStream outputStream = response.getOutputStream();
-		SysFile sysFile = fileService.findByRelativePath(relativePath);
-		Assert.notNull(sysFile,"文件不存在");
-		InputStream in = fileService.download(relativePath);
-		//第一步：设置响应类型
-		//response.setContentType("application/force-download");//应用程序强制下载,实际测试不需要
-		response.setContentType(sysFile.getContentType());
-		response.setHeader("Content-Disposition", "attachment;filename="+ CodecUtils.urlEncode(sysFile.getName()));
-		response.setContentLength(in.available());
-		BufferedOutputStream bos = new BufferedOutputStream(outputStream);
-		BufferedInputStream bin = new BufferedInputStream(in);
-		//1M 一写
-		byte[] buffer = new byte[1024 * 1024];
-		int len = 0;
-		while (-1 != (len = bin.read(buffer))) {
-			bos.write(buffer, 0, len);
-		}
-		bos.flush();
-		bos.close();
-		bin.close();
-	}
+        //压缩算法
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        Thumbnails.of(imgFile.getInputStream()).outputQuality(0.5f).scale(1).toOutputStream(bos);
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bos.toByteArray());
+        FileInfo fileInfo = fileService.upload(imgFile.getOriginalFilename(), imgFile.getContentType(), (long) byteArrayInputStream.available(),
+                byteArrayInputStream);
+
+        //FileInfo fileInfo = fileService.upload(imgFile.getOriginalFilename(), imgFile.getContentType(), imgFile.getSize(),
+        //		imgFile.getInputStream());
+        Map<String, Object> map = new HashMap<String, Object>();
+        // 输出文件地址
+        map.put("url", fileInfo.getFullUrl());
+        // 状态
+        map.put("error", 0);
+        return map;
+    }
+
+    @RequestMapping("/down.do")
+    public void down(@RequestParam String relativePath, HttpServletResponse response) throws IOException {
+        ServletOutputStream outputStream = response.getOutputStream();
+        SysFile sysFile = fileService.findByRelativePath(relativePath);
+        Assert.notNull(sysFile, "文件不存在");
+        InputStream in = fileService.download(relativePath);
+        //第一步：设置响应类型
+        //response.setContentType("application/force-download");//应用程序强制下载,实际测试不需要
+        response.setContentType(sysFile.getContentType());
+        response.setHeader("Content-Disposition", "attachment;filename=" + CodecUtils.urlEncode(sysFile.getName()));
+        response.setContentLength(in.available());
+        BufferedOutputStream bos = new BufferedOutputStream(outputStream);
+        BufferedInputStream bin = new BufferedInputStream(in);
+        //1M 一写
+        byte[] buffer = new byte[1024 * 1024];
+        int len = 0;
+        while (-1 != (len = bin.read(buffer))) {
+            bos.write(buffer, 0, len);
+        }
+        bos.flush();
+        bos.close();
+        bin.close();
+    }
 }

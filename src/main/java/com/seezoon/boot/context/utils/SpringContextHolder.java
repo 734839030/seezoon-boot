@@ -8,18 +8,19 @@ import org.springframework.stereotype.Component;
 @Component
 public class SpringContextHolder implements ApplicationContextAware {
 
-	private static ApplicationContext applicationContext;
+    private static ApplicationContext applicationContext;
 
-	@SuppressWarnings("static-access")
-	@Override
-	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-		this.applicationContext = applicationContext;
-	}
+    public static <T> T getBean(Class<T> clazz) {
+        return applicationContext.getBean(clazz);
+    }
 
-	public static <T> T getBean(Class<T> clazz) {
-		return applicationContext.getBean(clazz);
-	}
-	public static <T> T getBean(String beanName,Class<T> clazz) {
-		return applicationContext.getBean(beanName,clazz);
-	}
+    public static <T> T getBean(String beanName, Class<T> clazz) {
+        return applicationContext.getBean(beanName, clazz);
+    }
+
+    @SuppressWarnings("static-access")
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.applicationContext = applicationContext;
+    }
 }

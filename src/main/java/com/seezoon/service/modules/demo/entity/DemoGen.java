@@ -1,19 +1,22 @@
 package com.seezoon.service.modules.demo.entity;
 
 import com.seezoon.boot.common.entity.BaseEntity;
-import javax.validation.constraints.NotNull;
-import org.hibernate.validator.constraints.Length;
-import java.util.Date;
 import com.seezoon.service.modules.sys.dto.FileInfo;
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.NotNull;
+import java.util.Date;
 import java.util.List;
+
 /**
  * 生成案例
  * Copyright &copy; 2018 powered by huangdf, All rights reserved.
+ *
  * @author hdf 2018-11-19 22:43:25
  */
 public class DemoGen extends BaseEntity<String> {
 
-   private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
     /**
      * 文本
      */
@@ -68,12 +71,6 @@ public class DemoGen extends BaseEntity<String> {
     @Length(min = 1, max = 255)
     private String image;
     private List<FileInfo> imageArray;
-    public List<FileInfo> getImageArray(){
-        return imageArray;
-    }
-    public void setImageArray(List<FileInfo> imageArray){
-        this.imageArray = imageArray;
-    }
     /**
      * 文件
      */
@@ -81,76 +78,108 @@ public class DemoGen extends BaseEntity<String> {
     @Length(min = 1, max = 255)
     private String file;
     private List<FileInfo> fileArray;
-    public List<FileInfo> getFileArray(){
+
+    public List<FileInfo> getImageArray() {
+        return imageArray;
+    }
+
+    public void setImageArray(List<FileInfo> imageArray) {
+        this.imageArray = imageArray;
+    }
+
+    public List<FileInfo> getFileArray() {
         return fileArray;
     }
-    public void setFileArray(List<FileInfo> fileArray){
+
+    public void setFileArray(List<FileInfo> fileArray) {
         this.fileArray = fileArray;
     }
-    public String getInputText(){
+
+    public String getInputText() {
         return inputText;
     }
-    public void setInputText(String inputText){
+
+    public void setInputText(String inputText) {
         this.inputText = inputText;
     }
-    public String getInputSelect(){
+
+    public String getInputSelect() {
         return inputSelect;
     }
-    public void setInputSelect(String inputSelect){
+
+    public void setInputSelect(String inputSelect) {
         this.inputSelect = inputSelect;
     }
-    public String getInputRadio(){
+
+    public String getInputRadio() {
         return inputRadio;
     }
-    public void setInputRadio(String inputRadio){
+
+    public void setInputRadio(String inputRadio) {
         this.inputRadio = inputRadio;
     }
-    public String getInputCheckbox(){
+
+    public String getInputCheckbox() {
         return inputCheckbox;
     }
-    public void setInputCheckbox(String inputCheckbox){
+
+    public void setInputCheckbox(String inputCheckbox) {
         this.inputCheckbox = inputCheckbox;
     }
-    public String getInputTextarea(){
+
+    public String getInputTextarea() {
         return inputTextarea;
     }
-    public void setInputTextarea(String inputTextarea){
+
+    public void setInputTextarea(String inputTextarea) {
         this.inputTextarea = inputTextarea;
     }
-    public Date getInputDate(){
+
+    public Date getInputDate() {
         return inputDate;
     }
-    public void setInputDate(Date inputDate){
+
+    public void setInputDate(Date inputDate) {
         this.inputDate = inputDate;
     }
-    public Integer getInputZhengshu(){
+
+    public Integer getInputZhengshu() {
         return inputZhengshu;
     }
-    public void setInputZhengshu(Integer inputZhengshu){
+
+    public void setInputZhengshu(Integer inputZhengshu) {
         this.inputZhengshu = inputZhengshu;
     }
-    public Double getInputXiaoshu(){
+
+    public Double getInputXiaoshu() {
         return inputXiaoshu;
     }
-    public void setInputXiaoshu(Double inputXiaoshu){
+
+    public void setInputXiaoshu(Double inputXiaoshu) {
         this.inputXiaoshu = inputXiaoshu;
     }
-    public String getRichText(){
+
+    public String getRichText() {
         return richText;
     }
-    public void setRichText(String richText){
+
+    public void setRichText(String richText) {
         this.richText = richText;
     }
-    public String getImage(){
+
+    public String getImage() {
         return image;
     }
-    public void setImage(String image){
+
+    public void setImage(String image) {
         this.image = image;
     }
-    public String getFile(){
+
+    public String getFile() {
         return file;
     }
-    public void setFile(String file){
+
+    public void setFile(String file) {
         this.file = file;
     }
 }

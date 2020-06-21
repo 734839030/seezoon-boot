@@ -1,18 +1,23 @@
 package com.seezoon.service.modules.sys.entity;
 
-import javax.validation.constraints.NotNull;
-
+import com.seezoon.boot.common.entity.BaseEntity;
 import org.hibernate.validator.constraints.Length;
 
-import com.seezoon.boot.common.entity.BaseEntity;
+import javax.validation.constraints.NotNull;
+
 /**
  * 区域表
  * Copyright &copy; 2018 powered by huangdf, All rights reserved.
+ *
  * @author hdf 2018-7-9 21:56:46
  */
 public class SysArea extends BaseEntity<String> {
 
-   private static final long serialVersionUID = 1L;
+    public static final String AREA_TYPE_PROVINCE = "1";
+    public static final String AREA_TYPE_CITY = "2";
+    public static final String AREA_TYPE_COUNTY = "3";
+    public static final String ROOT_ID = "0";
+    private static final long serialVersionUID = 1L;
     /**
      * 名称
      */
@@ -42,40 +47,44 @@ public class SysArea extends BaseEntity<String> {
     @NotNull
     @Length(min = 1, max = 1)
     private String status;
-    
-    public static final String AREA_TYPE_PROVINCE = "1";
-    public static final String AREA_TYPE_CITY = "2";
-    public static final String AREA_TYPE_COUNTY = "3";
-    public static final String ROOT_ID = "0";
 
-    public String getName(){
+    public String getName() {
         return name;
     }
-    public void setName(String name){
+
+    public void setName(String name) {
         this.name = name;
     }
-    public String getParentId(){
+
+    public String getParentId() {
         return parentId;
     }
-    public void setParentId(String parentId){
+
+    public void setParentId(String parentId) {
         this.parentId = parentId;
     }
-    public Integer getSort(){
+
+    public Integer getSort() {
         return sort;
     }
-    public void setSort(Integer sort){
+
+    public void setSort(Integer sort) {
         this.sort = sort;
     }
-    public String getType(){
+
+    public String getType() {
         return type;
     }
-    public void setType(String type){
+
+    public void setType(String type) {
         this.type = type;
     }
-    public String getStatus(){
+
+    public String getStatus() {
         return status;
     }
-    public void setStatus(String status){
+
+    public void setStatus(String status) {
         this.status = status;
     }
 }

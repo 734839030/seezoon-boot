@@ -1,163 +1,158 @@
 package com.seezoon.service.modules.sys.entity;
 
-import java.util.Date;
-
-import javax.validation.constraints.NotNull;
-
+import com.seezoon.boot.common.entity.BaseEntity;
 import org.hibernate.validator.constraints.Length;
 
-import com.seezoon.boot.common.entity.BaseEntity;
+import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 /**
  * 登录日志 Copyright &copy; 2018 powered by huangdf, All rights reserved.
- * 
+ *
  * @author hdf 2018-5-31 21:34:17
  */
 public class SysLoginLog extends BaseEntity<String> {
 
-	private static final long serialVersionUID = 1L;
-	/**
-	 * 用户ID
-	 */
-	@NotNull
-	@Length(min = 1, max = 32)
-	private String userId;
-	/**
-	 * 登录状态0:成功;1.密码错误；2.已禁用;3.系统错误
-	 */
-	@NotNull
-	@Length(min = 1, max = 1)
-	private String status;
-	/**
-	 * 登录时间
-	 */
-	@NotNull
-	private Date loginTime;
-	/**
-	 * IP地址
-	 */
-	@Length(max = 16)
-	private String ip;
-	/**
-	 * 登录地区
-	 */
-	@Length(max = 20)
-	private String area;
-	/**
-	 * 用户代理
-	 */
-	@NotNull
-	@Length(min = 1, max = 1000)
-	private String userAgent;
-	/**
-	 * 设备名称
-	 */
-	@Length(max = 100)
-	private String deviceName;
-	/**
-	 * 浏览器名称
-	 */
-	@Length(max = 100)
-	private String browserName;
-	/********* 割 *******/
+    public static final String SUCCESS = "0";
+    public static final String PASSWORD_WRONG = "1";
+    public static final String USER_STAUTS_STOP = "2";
+    public static final String LOCK_24 = "3";
+    private static final long serialVersionUID = 1L;
+    /**
+     * 用户ID
+     */
+    @NotNull
+    @Length(min = 1, max = 32)
+    private String userId;
+    /**
+     * 登录状态0:成功;1.密码错误；2.已禁用;3.系统错误
+     */
+    @NotNull
+    @Length(min = 1, max = 1)
+    private String status;
+    /**
+     * 登录时间
+     */
+    @NotNull
+    private Date loginTime;
+    /**
+     * IP地址
+     */
+    @Length(max = 16)
+    private String ip;
+    /********* 割 *******/
+    /**
+     * 登录地区
+     */
+    @Length(max = 20)
+    private String area;
+    /**
+     * 用户代理
+     */
+    @NotNull
+    @Length(min = 1, max = 1000)
+    private String userAgent;
+    /**
+     * 设备名称
+     */
+    @Length(max = 100)
+    private String deviceName;
+    /**
+     * 浏览器名称
+     */
+    @Length(max = 100)
+    private String browserName;
+    /**
+     * 登录名
+     */
+    private String loginName;
+    /**
+     * 用户名
+     */
+    private String userName;
 
-	/**
-	 * 登录名
-	 */
-	private String loginName;
-	/**
-	 * 用户名
-	 */
-	private String userName;
+    @Override
+    public String getTableAlias() {
+        return "l";
+    }
 
-	public static final String  SUCCESS = "0";
-	public static final String  PASSWORD_WRONG = "1";
-	public static final String  USER_STAUTS_STOP = "2";
-	public static final String  LOCK_24 = "3";
+    public String getUserId() {
+        return userId;
+    }
 
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
-	@Override
-	public String getTableAlias() {
-		return "l";
-	}
+    public Date getLoginTime() {
+        return loginTime;
+    }
 
-	public String getUserId() {
-		return userId;
-	}
+    public void setLoginTime(Date loginTime) {
+        this.loginTime = loginTime;
+    }
 
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
+    public String getIp() {
+        return ip;
+    }
 
-	public Date getLoginTime() {
-		return loginTime;
-	}
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
 
-	public void setLoginTime(Date loginTime) {
-		this.loginTime = loginTime;
-	}
+    public String getArea() {
+        return area;
+    }
 
-	public String getIp() {
-		return ip;
-	}
+    public void setArea(String area) {
+        this.area = area;
+    }
 
-	public void setIp(String ip) {
-		this.ip = ip;
-	}
+    public String getUserAgent() {
+        return userAgent;
+    }
 
-	public String getArea() {
-		return area;
-	}
+    public void setUserAgent(String userAgent) {
+        this.userAgent = userAgent;
+    }
 
-	public void setArea(String area) {
-		this.area = area;
-	}
+    public String getDeviceName() {
+        return deviceName;
+    }
 
-	public String getUserAgent() {
-		return userAgent;
-	}
+    public void setDeviceName(String deviceName) {
+        this.deviceName = deviceName;
+    }
 
-	public void setUserAgent(String userAgent) {
-		this.userAgent = userAgent;
-	}
+    public String getBrowserName() {
+        return browserName;
+    }
 
-	public String getDeviceName() {
-		return deviceName;
-	}
+    public void setBrowserName(String browserName) {
+        this.browserName = browserName;
+    }
 
-	public void setDeviceName(String deviceName) {
-		this.deviceName = deviceName;
-	}
+    public String getLoginName() {
+        return loginName;
+    }
 
-	public String getBrowserName() {
-		return browserName;
-	}
+    public void setLoginName(String loginName) {
+        this.loginName = loginName;
+    }
 
-	public void setBrowserName(String browserName) {
-		this.browserName = browserName;
-	}
+    public String getUserName() {
+        return userName;
+    }
 
-	public String getLoginName() {
-		return loginName;
-	}
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
-	public void setLoginName(String loginName) {
-		this.loginName = loginName;
-	}
+    public String getStatus() {
+        return status;
+    }
 
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }

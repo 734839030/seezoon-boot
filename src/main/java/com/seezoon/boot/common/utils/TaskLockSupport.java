@@ -19,18 +19,19 @@ public class TaskLockSupport {
 
     private Logger logger = LoggerFactory.getLogger(TaskLockSupport.class);
 
-    private String  taskKey;
+    private String taskKey;
 
     private RedisTemplate<String, String> redisTemplate;
     private StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
+
     public TaskLockSupport(String taskKey, RedisTemplate<String, String> redisTemplate) {
-        Assert.hasLength(taskKey,"taskKey is empty");
-        Assert.notNull(redisTemplate,"redisTemplate is null");
+        Assert.hasLength(taskKey, "taskKey is empty");
+        Assert.notNull(redisTemplate, "redisTemplate is null");
         this.taskKey = taskKey;
         this.redisTemplate = redisTemplate;
     }
 
-    public void start(TaskHandler taskHandler){
+    public void start(TaskHandler taskHandler) {
         MdcUtil.push();
        /*  无法保证原子性
        try {
@@ -48,13 +49,13 @@ public class TaskLockSupport {
             }
         });
         if (!executed) {
-            return ;
+            return;
         }
 
         try {
             taskHandler.invoker();
-        }  catch (Exception e) {
-            logger.error("task error taskKey:{}",taskKey,e);
+        } catch (Exception e) {
+            logger.error("task error taskKey:{}", taskKey, e);
         } finally {
             redisTemplate.delete(taskKey);
         }
@@ -63,6 +64,7 @@ public class TaskLockSupport {
 
     public static interface TaskHandler {
         public void taskRule();
+
         public void invoker();
     }
 }

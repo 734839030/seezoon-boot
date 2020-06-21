@@ -1,12 +1,12 @@
 package com.seezoon.boot.common.utils;
 
+import com.seezoon.boot.context.exception.ServiceException;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import com.seezoon.boot.context.exception.ServiceException;
-
 /**
  * 框架有地方用到了mybatis $ 符号
+ *
  * @author hdf
  * 2018年5月23日
  */
@@ -14,10 +14,11 @@ public class SQLFilterUtils {
 
     /**
      * SQL注入过滤
-     * @param str  待验证的字符串
+     *
+     * @param str 待验证的字符串
      */
-    public static String sqlFilter(String str){
-        if(StringUtils.isBlank(str)){
+    public static String sqlFilter(String str) {
+        if (StringUtils.isBlank(str)) {
             return null;
         }
         //去掉'|"|;|\ -- 字符
@@ -31,7 +32,7 @@ public class SQLFilterUtils {
         String[] keywords = {"master", "truncate", "insert", "select", "delete", "update", "declare", "alert", "drop"};
         //判断是否包含非法字符
         if (ArrayUtils.contains(keywords, str)) {
-        		throw new ServiceException("sql语句有注入风险");
+            throw new ServiceException("sql语句有注入风险");
         }
         return str;
     }

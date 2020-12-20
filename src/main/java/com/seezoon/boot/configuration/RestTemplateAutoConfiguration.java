@@ -81,6 +81,15 @@ public class RestTemplateAutoConfiguration {
                 .register("http", PlainConnectionSocketFactory.getSocketFactory()).register("https", sslSocketFactory)
                 .build();
         PoolingHttpClientConnectionManager poolingConnectionManager = new PoolingHttpClientConnectionManager(socketFactoryRegistry);
+        /**
+         *
+         *  自定义连接池的话这个更准确，自动已连接池参数需要都在连接池上设置 {@link org.apache.http.impl.client.HttpClientBuilder#build}
+         PoolingHttpClientConnectionManager poolingConnectionManager1 = new PoolingHttpClientConnectionManager(
+         socketFactoryRegistry, null, null, null,
+         httpClientConfig.getConnTimeToLive(), TimeUnit.MILLISECONDS);
+         *
+         */
+
         poolingConnectionManager.setMaxTotal(httpClientConfig.getMaxTotal()); // 连接池最大连接数
         poolingConnectionManager.setDefaultMaxPerRoute(httpClientConfig.getMaxPerRoute()); // 每个主机的并发
         // 长连接
@@ -106,6 +115,7 @@ public class RestTemplateAutoConfiguration {
         httpClientBuilder.setDefaultRequestConfig(requestConfig)
                 .setUserAgent(httpClientConfig.getUserAgent())
                 .disableContentCompression().disableAutomaticRetries()
+                // 收动设置连接池 这个在连接池那里设置，@see 该方法注释
                 .setConnectionTimeToLive(httpClientConfig.getConnTimeToLive(), TimeUnit.MILLISECONDS)// 连接最大存活时间
                 .setRetryHandler(new DefaultHttpRequestRetryHandler(httpClientConfig.getRetyTimes(), true));// 重试次数
         return httpClientBuilder;

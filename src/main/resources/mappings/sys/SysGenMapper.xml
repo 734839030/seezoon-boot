@@ -20,22 +20,22 @@
     <result column="columns" property="columns" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, table_name,pk_type, menu_name, module_name,function_name, template, class_name, create_by, create_date, 
+    id, table_name,pk_type, menu_name, module_name,function_name, template, class_name, create_by, create_date,
     update_by, update_date, remarks
   </sql>
   <sql id="Blob_Column_List" >
     columns
   </sql>
   <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
-    select 
+    select
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
     from sys_gen
-    where id = #{id,jdbcType=VARCHAR} 
+    where id = #{id,jdbcType=VARCHAR}
   </select>
    <select id="findList" resultMap="BaseResultMap" parameterType="com.seezoon.service.modules.sys.entity.SysGen" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from sys_gen
     <where>
@@ -52,11 +52,11 @@
 		order by ${sortField} ${direction}
 	</if>
   </select>
-  
+
   <select id="findTable" parameterType="String" resultType="com.seezoon.service.modules.sys.dto.DbTable">
-  	select table_name name, table_comment comment from information_schema.tables 
+  	select table_name name, table_comment comment from information_schema.tables
 		<where>
-			table_schema = (select database()) 
+			table_schema = (select database())
 			<if test="tableName != null and tableName!= ''">
 				and table_name = upper(#{tableName})
 			</if>
@@ -67,7 +67,7 @@
   select
 	t.data_type dataType
 	from
-	information_schema.`columns` t 
+	information_schema.`columns` t
 	where table_name = upper(#{tableName}) and t.table_schema = (select database()) and t.column_key = 'PRI'
 	order by t.ordinal_position asc limit 0,1
   </select>
@@ -83,7 +83,7 @@
 	t.column_key columnKey,
 	t.extra extra
 	from
-	information_schema.`columns` t 
+	information_schema.`columns` t
 	where table_name = upper(#{tableName}) and t.table_schema = (select database())
 	order by t.ordinal_position asc
   </select>
@@ -93,14 +93,14 @@
     where id = #{id,jdbcType=VARCHAR} ${dsf}
   </delete>
   <insert id="insert" parameterType="com.seezoon.service.modules.sys.entity.SysGen" >
-    insert into sys_gen (id, table_name,pk_type, menu_name, 
-      module_name,function_name, template, class_name, 
-      create_by, create_date, update_by, 
+    insert into sys_gen (id, table_name,pk_type, menu_name,
+      module_name,function_name, template, class_name,
+      create_by, create_date, update_by,
       update_date, remarks, columns
       )
-    values (#{id,jdbcType=VARCHAR}, #{tableName,jdbcType=VARCHAR}, #{pkType,jdbcType=VARCHAR}, #{menuName,jdbcType=VARCHAR}, 
-      #{moduleName,jdbcType=VARCHAR},#{functionName},#{template,jdbcType=VARCHAR}, #{className,jdbcType=VARCHAR}, 
-      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=VARCHAR}, #{tableName,jdbcType=VARCHAR}, #{pkType,jdbcType=VARCHAR}, #{menuName,jdbcType=VARCHAR},
+      #{moduleName,jdbcType=VARCHAR},#{functionName},#{template,jdbcType=VARCHAR}, #{className,jdbcType=VARCHAR},
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
       #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{columns,jdbcType=LONGVARCHAR}
       )
   </insert>

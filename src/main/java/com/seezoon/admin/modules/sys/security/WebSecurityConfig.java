@@ -34,8 +34,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers((adminPath + "/**")).authenticated()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()//跨域的
                 .and().rememberMe().key("seezoon").rememberMeParameter("rememberMe").tokenValiditySeconds(7 * 24 * 60 * 60).useSecureCookie(true).userDetailsService(adminUserDetailsService())
-                .and().formLogin().loginProcessingUrl(adminPath + "/login").permitAll()//.successHandler(new LoginResultHandler())
-                .and().logout().logoutUrl(adminPath + "/user/logout").logoutSuccessHandler(loginResultHandler()).deleteCookies("remember-me")
+                .and().formLogin().loginProcessingUrl(adminPath + "/login.do").permitAll()//.successHandler(new LoginResultHandler())
+                .and().logout().logoutUrl(adminPath + "/user/logout.do").logoutSuccessHandler(loginResultHandler()).deleteCookies("remember-me")
                 //.failureHandler(new LoginResultHandler())
                 .and().csrf().disable()
                 .headers().xssProtection().disable().frameOptions().disable()
@@ -62,7 +62,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Bean
     public AdminUsernamePasswordAuthenticationFilter adminUsernamePasswordAuthenticationFilter() throws Exception {
-        AdminUsernamePasswordAuthenticationFilter adminUsernamePasswordAuthenticationFilter = new AdminUsernamePasswordAuthenticationFilter(adminPath + "/login");
+        AdminUsernamePasswordAuthenticationFilter adminUsernamePasswordAuthenticationFilter = new AdminUsernamePasswordAuthenticationFilter(adminPath + "/login.do");
         adminUsernamePasswordAuthenticationFilter.setAuthenticationManager(this.authenticationManager());
         adminUsernamePasswordAuthenticationFilter.setAuthenticationSuccessHandler(loginResultHandler());
         adminUsernamePasswordAuthenticationFilter.setAuthenticationFailureHandler(loginResultHandler());

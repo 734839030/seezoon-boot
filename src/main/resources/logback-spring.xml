@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE xml>
 <!-- 启动时候可以指定为外部日志文件 动态修改日志级别 -->
-<configuration    scan="true" scanPeriod="1800 seconds" debug="false" >
-    <property name="LOG_HOME" value="./logs" />
-    <property name="LOG_FILE" value="seezoon" />
+<configuration scan="true" scanPeriod="1800 seconds" debug="false">
+    <property name="LOG_HOME" value="./logs"/>
+    <property name="LOG_FILE" value="seezoon"/>
     <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
-    <property name="LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%X{tid}] %-5level %logger{10} - %msg%n" />
+    <property name="LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%X{tid}] %-5level %logger{10} - %msg%n"/>
     <!-- 控制台输出 -->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -14,7 +13,7 @@
         </encoder>
     </appender>
     <!-- 按照每天生成日志文件 -->
-    <appender name="FILE"  class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!-- 指定日志文件的名称 -->
         <file>${LOG_HOME}/${LOG_FILE}.log</file>
         <!-- ch.qos.logback.core.rolling.TimeBasedRollingPolicy
@@ -38,30 +37,30 @@
     <appender name="AsyncFile" class="ch.qos.logback.classic.AsyncAppender">
         <discardingThreshold>0</discardingThreshold>
         <queueSize>10000</queueSize>
-        <appender-ref ref="FILE" />
+        <appender-ref ref="FILE"/>
     </appender>
-    <logger name="org.apache" level="INFO" />
-    <logger name="org.springframework" level="INFO" />
-<!--    <logger name="org.springframework.jdbc" level="DEBUG" />-->
-    <logger name="org.mybatis.spring" level="INFO" />
-    <logger name="druid.sql" level="INFO" />
-    <logger name="io.lettuce" level="ERROR" />
-    <logger name="io.netty" level="ERROR" />
-    <logger name="org.hibernate" level="ERROR" />
+    <logger name="org.apache" level="INFO"/>
+    <logger name="org.springframework" level="INFO"/>
+    <!--    <logger name="org.springframework.jdbc" level="DEBUG" />-->
+    <logger name="org.mybatis.spring" level="INFO"/>
+    <logger name="druid.sql" level="INFO"/>
+    <logger name="io.lettuce" level="ERROR"/>
+    <logger name="io.netty" level="ERROR"/>
+    <logger name="org.hibernate" level="ERROR"/>
 
 
     <!-- 开发环境下的日志配置 -->
     <springProfile name="dev">
         <!-- 日志输出级别 -->
         <root level="DEBUG">
-            <appender-ref ref="STDOUT" />
+            <appender-ref ref="STDOUT"/>
         </root>
     </springProfile>
     <!-- 测试环境下的日志配置 -->
     <springProfile name="uat">
         <!-- 日志输出级别 -->
         <root level="DEBUG">
-            <appender-ref ref="FILE" />
+            <appender-ref ref="FILE"/>
         </root>
     </springProfile>
     <!-- 生产环境下的日志配置 -->
@@ -69,7 +68,7 @@
         <!-- 日志输出级别 -->
         <root level="INFO">
             <!-- 使用异步日志 -->
-            <appender-ref ref="AsyncFile" />
+            <appender-ref ref="AsyncFile"/>
         </root>
     </springProfile>
 

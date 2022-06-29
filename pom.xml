@@ -37,7 +37,7 @@
 		<!-- 二维码 -->
 		<zxing.version>3.3.2</zxing.version>
 		<!-- excel 导入导出 -->
-		<poi.version>3.17</poi.version>
+		<poi.version>4.1.1</poi.version>
 		<kaptcha-version>0.0.9</kaptcha-version>
 	</properties>
 
